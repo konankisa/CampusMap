@@ -3,7 +3,8 @@
 
 1. Why did Fibonacci fail the testThrowsIllegalArgumentException< test? What (if anything) did
 you have to do to fix it? If you did not have to change anything to fix this issue, explain why.
-
+The test failed because the exception was thrown for when n = 0, but 0 is nonnegative. I just had to change the
+condition to not include 0 in it.
 
 
 2. Why did Fibonacci fail the testBaseCase test? What (if anything) did you have to do to fix
