@@ -12,7 +12,7 @@
 package setup;
 
 import java.lang.Iterable;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * This is a container can be used to contain Balls. The key
@@ -20,6 +20,21 @@ import java.util.Iterator;
  * finite volume. Once a box is full, a client cannot put in more Balls.
  */
 public class Box implements Iterable<Ball> {
+
+    /**
+     * A field for the maximum volume of the ballContainer
+     */
+    private double maxVol;
+
+    /**
+     * ArrayList that store volumes in sorted order
+     */
+    private ArrayList<Double> sortedVols;
+
+    /**
+     * Map that stores Balls and the corresponding volumes as the keys
+     */
+    private Map<Double, Ball> ballMap;
 
     /**
      * ballContainer is used to internally store balls for this Box
@@ -32,8 +47,10 @@ public class Box implements Iterable<Ball> {
      * @param maxVolume Total volume of balls that this box can contain.
      */
     public Box(double maxVolume) {
-        // Your code goes here.  Remove the exception after you're done.
-        throw new RuntimeException("Method not implemented");
+        this.maxVol = maxVolume;
+        this.ballContainer = new BallContainer();
+        this.sortedVols = new ArrayList<>();
+        this.ballMap = new HashMap<>();
     }
 
     /**
@@ -64,8 +81,15 @@ public class Box implements Iterable<Ball> {
      * @spec.requires b != null.
      */
     public boolean add(Ball b) {
-        // Your code goes here.  Remove the exception after you're done.
-        throw new RuntimeException("Method not implemented");
+        if (b != null) {
+            if (!ballContainer.contains(b) && maxVol > getVolume()) {
+                sortedVols.add(b.getVolume());
+                ballMap.put(b.getVolume(), b);
+                ballContainer.add(b);
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -77,8 +101,12 @@ public class Box implements Iterable<Ball> {
      * ascending size.
      */
     public Iterator<Ball> getBallsFromSmallest() {
-        // Your code goes here.  Remove the exception after you're done.
-        throw new RuntimeException("Method not implemented");
+        Collections.sort(sortedVols);
+        ArrayList<Ball> sortedBalls = new ArrayList<>();
+        for (Double sortedVol : sortedVols) {
+            sortedBalls.add(ballMap.get(sortedVol));
+        }
+        return sortedBalls.iterator();
     }
 
     /**
@@ -95,7 +123,12 @@ public class Box implements Iterable<Ball> {
      * @spec.requires b != null.
      */
     public boolean remove(Ball b) {
-        return ballContainer.remove(b);
+        if (b != null) {
+            if (contains(b)) {
+                return ballContainer.remove(b);
+            }
+        }
+        return false;
     }
 
     /**
@@ -122,6 +155,8 @@ public class Box implements Iterable<Ball> {
      */
     public void clear() {
         ballContainer.clear();
+        sortedVols.clear();
+        ballMap.clear();
     }
 
     /**
