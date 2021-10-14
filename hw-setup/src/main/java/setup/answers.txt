@@ -3,17 +3,19 @@
 
 1. Why did Fibonacci fail the testThrowsIllegalArgumentException< test? What (if anything) did
 you have to do to fix it? If you did not have to change anything to fix this issue, explain why.
-The test failed because the exception was thrown for when n = 0, but 0 is nonnegative. I just had to change the
+The test failed because the exception was thrown for when n = 0, but 0 is non-negative. I just had to change the
 condition to not include 0 in it.
 
 
 2. Why did Fibonacci fail the testBaseCase test? What (if anything) did you have to do to fix
 it? If you did not have to change anything to fix this issue, explain why.
-
+It failed because n should start at 1, but instead starts at 2, which also messes up the next test. I changed the
+condition so that it was n <= 1 instead of n <= 2.
 
 
 3.Why did Fibonacci fail the testInductiveCase test? What (if anything) did you have to do to
 fix it? If you did not have to change anything to fix this issue, explain why.
-
+It failed because the value returned is not the correct value. I changed the sign between the recursive calls to +
+so that we get the actual Fibonacci number.
 
 
