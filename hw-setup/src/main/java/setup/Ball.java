@@ -11,6 +11,8 @@
 
 package setup;
 
+import java.util.Comparator;
+
 /**
  * This is a simple object that has a volume.
  */
@@ -40,4 +42,12 @@ public class Ball {
         return volume;
     }
 
+}
+
+class BallComp implements Comparator<Ball> {
+
+    @Override
+    public int compare(Ball o1, Ball o2) {
+        return Double.compare(o1.getVolume(), o2.getVolume());
+    }
 }

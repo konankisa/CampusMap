@@ -27,16 +27,6 @@ public class Box implements Iterable<Ball> {
     private double maxVol;
 
     /**
-     * ArrayList that store volumes in sorted order
-     */
-    private ArrayList<Double> sortedVols;
-
-    /**
-     * Map that stores Balls and the corresponding volumes as the keys
-     */
-    private Map<Double, Ball> ballMap;
-
-    /**
      * ballContainer is used to internally store balls for this Box
      */
     private BallContainer ballContainer;
@@ -49,8 +39,6 @@ public class Box implements Iterable<Ball> {
     public Box(double maxVolume) {
         this.maxVol = maxVolume;
         this.ballContainer = new BallContainer();
-        this.sortedVols = new ArrayList<>();
-        this.ballMap = new HashMap<>();
     }
 
     /**
@@ -83,8 +71,6 @@ public class Box implements Iterable<Ball> {
     public boolean add(Ball b) {
         if (b != null) {
             if (!ballContainer.contains(b) && maxVol > getVolume()) {
-                sortedVols.add(b.getVolume());
-                ballMap.put(b.getVolume(), b);
                 ballContainer.add(b);
                 return true;
             }
@@ -101,11 +87,12 @@ public class Box implements Iterable<Ball> {
      * ascending size.
      */
     public Iterator<Ball> getBallsFromSmallest() {
-        Collections.sort(sortedVols);
-        ArrayList<Ball> sortedBalls = new ArrayList<>();
-        for (Double sortedVol : sortedVols) {
-            sortedBalls.add(ballMap.get(sortedVol));
+        List<Ball> sortedBalls = new ArrayList<>();
+        BallComp ballComp = new BallComp();
+        for (Ball ball : ballContainer) {
+            sortedBalls.add(ball);
         }
+        sortedBalls.sort(ballComp);
         return sortedBalls.iterator();
     }
 
@@ -155,8 +142,6 @@ public class Box implements Iterable<Ball> {
      */
     public void clear() {
         ballContainer.clear();
-        sortedVols.clear();
-        ballMap.clear();
     }
 
     /**

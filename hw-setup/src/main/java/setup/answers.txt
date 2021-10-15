@@ -18,4 +18,6 @@ fix it? If you did not have to change anything to fix this issue, explain why.
 It failed because the value returned is not the correct value. I changed the sign between the recursive calls to +
 so that we get the actual Fibonacci number.
 
+Changes made to Ball.java: I created a Comparator in Ball.java, so I could use it to compare the balls in ballContainer
+
 
