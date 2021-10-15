@@ -44,6 +44,9 @@ public class Ball {
 
 }
 
+/**
+ * A subclass for a Comparator that will be used to compare balls for sorting.
+ */
 class BallComp implements Comparator<Ball> {
 
     @Override
