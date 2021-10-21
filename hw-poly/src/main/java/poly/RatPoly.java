@@ -276,11 +276,13 @@ public final class RatPoly {
             return RatPoly.NaN;
         }
         List<RatTerm> r = new ArrayList<>(p.terms);
+        // Inv: r = all the RatTerms in terms, in sorted order
         for (RatTerm term : this.terms) {
             sortedInsert(r, term);
         }
+        RatPoly res = new RatPoly(r);
         checkRep();
-        return new RatPoly(r);
+        return res;
    }
 
     /**
@@ -322,8 +324,9 @@ public final class RatPoly {
                 sortedInsert(r, term);
             }
         }
+        RatPoly res = new RatPoly(r);
         checkRep();
-        return new RatPoly(r);
+        return res;
     }
 
     /**

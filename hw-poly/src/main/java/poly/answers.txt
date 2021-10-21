@@ -71,6 +71,6 @@ rep invariant is held true by checkRep.
 ###########################################################################
 
 1. Calls to checkRep in RatPoly
-
-
-
+I added checkRep at the end of constructor and at the beginning and end of my arithmetic methods.
+This is so that all the new RatPolys that are being created are checked to make sure they don't
+violate the rep invariant alongside the old RatPolys.
