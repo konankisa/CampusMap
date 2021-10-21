@@ -3,11 +3,28 @@
 ###########################################################################
 
 1. Multiplication Pseudocode
-
+r = p * q:
+    set r = 0
+    {Inv r = q*p_0 + q*p_1 + ... + q*p_i-1, where p_j is the jth term in p}
+    foreach term, t_p, in p:
+        {Inv r = q_1*p_j + q_2*p_j + ... + q_i-1*p_j, where q_k is the kth term in q}
+        foreach term, t_q, in q:
+            set t_s = t_p * t_q
+            if any term, t_r, in r has the same degree as t_s,
+                then replace t_r with the sum of t_r and t_s
+                else insert t_s into r as a new term
 
 
 2. Division Pseudocode
-
+q = u / v:
+    set r = u by making a term-by-term copy of all terms in u to r
+    set q = 0
+    {Inv u = (q * v) + r}
+    while r != 0 and highest degree of r >= highest degree of v:
+        set div = leading term of r / leading term of v
+        set deg = highest degree of r - highest degree of v
+        insert a term s, which has degree deg and the coefficient of div, into q as a new term
+        replace r with r - (s * v)
 
 
 3. Division Example: (x3+x-1) / (x+1) = x2-x+2
@@ -19,24 +36,35 @@
 ###########################################################################
 
 1. Weakened Rep Invariant
-
+We would take out the GCD method call within the RatNum constructor with 2 parameters to adhere to the
+new rep invariant, which would make the constructor more efficient as it doesn't need to run a loop.
+We would have to add a GCD method call in equals and hashCode as well, as they require reduced fractions to
+compare and return the same hashcode or to return true, which makes the methods less efficient.
+toString also has to use the GCD method within in order to get the reduced form for fractions, which would
+also be less efficient
 
 
 2. Alternate add, sub, mul, div
-
+These changes fail to meet the specifications of the methods because the methods do not indicate
+whether this is modified via a modifies clause. Furthermore, this fails the class specifications
+as the spec show that RatNum indicates an immutable rational number, yet the changes mutate RatNum.
 
 
 3. Constructor checkReps
-
-
+It is sufficient to call checkRep only at the end of the constructors because RatNum is an
+immutable rational number, and its variables are declared as final, meaning they're only
+initialized once and unable to be modified. Also, all the methods in RatNum return new RatNums
+without modifying the old ones, thus the rep invariant is held true by checkRep.
 
 
 ## Part 2
 ###########################################################################
 
 1. Calls to checkRep in RatTerm
-
-
+I added checkRep at the end of constructor for the same reason as in RatNum: RatTerm is immutable
+and its variables are final, meaning they're initialized once and are unmodifiable. Furthermore,
+all the methods in the class return new RatTerms without modifying the old ones, therefore the
+rep invariant is held true by checkRep.
 
 
 ## Part 3
