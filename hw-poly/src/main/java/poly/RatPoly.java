@@ -260,6 +260,20 @@ public final class RatPoly {
     }
 
     /**
+     * Make a copy of the terms in the RatPoly
+     *
+     * @return A copy of all the terms in the RatPoly
+     */
+    private List<RatTerm> copy() {
+        List<RatTerm> res = new ArrayList<>();
+        // Inv: res = res.add(term0) + ... + res.add(term_i-1) where i = terms.size()
+        for (RatTerm term : this.terms) {
+            res.add(new RatTerm(term.getCoeff(), term.getExpt()));
+        }
+        return res;
+    }
+
+    /**
      * Addition operation.
      *
      * @param p the other value to be added
@@ -275,7 +289,7 @@ public final class RatPoly {
         if (this.isNaN() || p.isNaN()) {
             return RatPoly.NaN;
         }
-        List<RatTerm> r = new ArrayList<>(p.terms);
+        List<RatTerm> r = p.copy();
         // Inv: r = all the RatTerms in terms, in sorted order
         for (RatTerm term : this.terms) {
             sortedInsert(r, term);
@@ -367,7 +381,7 @@ public final class RatPoly {
         if (p.terms.size() == 0 || this.isNaN() || p.isNaN()) {
             return RatPoly.NaN;
         }
-        List<RatTerm> copy = new ArrayList<>(this.terms);
+        List<RatTerm> copy = this.copy();
         RatPoly r = new RatPoly(copy);
         RatPoly q = new RatPoly();
         // Inv: this = (q * p) + r
