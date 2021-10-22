@@ -11,7 +11,7 @@ r = p * q:
         foreach term, t_q, in q:
             set t_s = t_p * t_q
             if any term, t_r, in r has the same degree as t_s,
-                then replace t_r with the sum of t_r and t_s
+                then replace t_r with the sum of t_r and t_s (polynomial addition)
                 else insert t_s into r as a new term
 
 
@@ -23,8 +23,9 @@ q = u / v:
     while r != 0 and highest degree of r >= highest degree of v:
         set div = leading term of r / leading term of v
         set deg = highest degree of r - highest degree of v
-        insert a term s, which has degree deg and the coefficient of div, into q as a new term
-        replace r with r - (s * v)
+        set s to be a polynomial which has degree deg and the coefficient of div
+        replace q with the sum of q and s (polynomial addition)
+        replace r with r - (s * v) (polynomial subtraction and multiplication)
 
 
 3. Division Example: (x3+x-1) / (x+1) = x2-x+2

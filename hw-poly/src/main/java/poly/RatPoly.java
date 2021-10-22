@@ -140,7 +140,7 @@ public final class RatPoly {
      * @spec.requires !this.isNaN()
      */
     public int degree() {
-        if (terms.size() == 0) {
+        if (terms.isEmpty()) {
             return 0;
         }
         return terms.get(0).getExpt();
@@ -155,7 +155,7 @@ public final class RatPoly {
      * @spec.requires !this.isNaN()
      */
     public RatTerm getTerm(int deg) {
-        // Inv: there will be no term in terms with the given degree
+        // Inv:
         for (RatTerm term : terms) {
             if (term.getExpt() == deg) {
                 return term;
@@ -170,7 +170,7 @@ public final class RatPoly {
      * @return true if and only if this has some coefficient = "NaN"
      */
     public boolean isNaN() {
-        // Inv: there will be no term in terms that is NaN
+        // Inv:
         for (RatTerm term : terms) {
             if (term.isNaN()) {
                 return true;
@@ -260,20 +260,6 @@ public final class RatPoly {
     }
 
     /**
-     * Make a copy of the terms in the RatPoly
-     *
-     * @return A copy of all the terms in the RatPoly
-     */
-    private List<RatTerm> copy() {
-        List<RatTerm> res = new ArrayList<>();
-        // Inv: res = res.add(term0) + ... + res.add(term_i-1) where i = terms.size()
-        for (RatTerm term : this.terms) {
-            res.add(new RatTerm(term.getCoeff(), term.getExpt()));
-        }
-        return res;
-    }
-
-    /**
      * Addition operation.
      *
      * @param p the other value to be added
@@ -289,7 +275,7 @@ public final class RatPoly {
         if (this.isNaN() || p.isNaN()) {
             return RatPoly.NaN;
         }
-        List<RatTerm> r = p.copy();
+        List<RatTerm> r = new ArrayList<>(p.terms);
         // Inv: r = all the RatTerms in terms, in sorted order
         for (RatTerm term : this.terms) {
             sortedInsert(r, term);
@@ -331,8 +317,9 @@ public final class RatPoly {
             return RatPoly.NaN;
         }
         List<RatTerm> r = new ArrayList<>();
-        //Inv: r = p*this(1) + p*this(2) ... + p*this(i-1) where this(j) is the jth term
+        //Inv: r = p*this(1) + p*this(2) + ... + p*this(i-1) where this(a) is the ath term
         for (int i = 0; i < this.terms.size(); i++) {
+            // Inv: r = p(1)*this(a) + p(2)*this(a) + ... p(j-1)*this(a) where p(b) is the bth term
             for (int j = 0; j < p.terms.size(); j++) {
                 RatTerm term = this.terms.get(i).mul(p.terms.get(j));
                 sortedInsert(r, term);
@@ -378,10 +365,10 @@ public final class RatPoly {
      */
     public RatPoly div(RatPoly p) {
         checkRep();
-        if (p.terms.size() == 0 || this.isNaN() || p.isNaN()) {
+        if (p.terms.isEmpty() || this.isNaN() || p.isNaN()) {
             return RatPoly.NaN;
         }
-        List<RatTerm> copy = this.copy();
+        List<RatTerm> copy = new ArrayList<>(this.terms);
         RatPoly r = new RatPoly(copy);
         RatPoly q = new RatPoly();
         // Inv: this = (q * p) + r
