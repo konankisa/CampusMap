@@ -18,7 +18,7 @@ r = p * q:
 2. Division Pseudocode
 q = u / v:
     set r = u by making a term-by-term copy of all terms in u to r
-    set q = 0
+    set polynomial q = 0
     {Inv u = (q * v) + r}
     while r != 0 and highest degree of r >= highest degree of v:
         set div = leading term of r / leading term of v
