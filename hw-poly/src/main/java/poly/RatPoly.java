@@ -155,7 +155,6 @@ public final class RatPoly {
      * @spec.requires !this.isNaN()
      */
     public RatTerm getTerm(int deg) {
-        // Inv:
         for (RatTerm term : terms) {
             if (term.getExpt() == deg) {
                 return term;
@@ -170,7 +169,6 @@ public final class RatPoly {
      * @return true if and only if this has some coefficient = "NaN"
      */
     public boolean isNaN() {
-        // Inv:
         for (RatTerm term : terms) {
             if (term.isNaN()) {
                 return true;
@@ -268,7 +266,6 @@ public final class RatPoly {
      * @spec.requires p != null
      */
     public RatPoly add(RatPoly p) {
-        checkRep();
         if (p == null) {
             throw new IllegalArgumentException("p cannot be null");
         }
@@ -281,7 +278,6 @@ public final class RatPoly {
             sortedInsert(r, term);
         }
         RatPoly res = new RatPoly(r);
-        checkRep();
         return res;
    }
 
@@ -309,7 +305,6 @@ public final class RatPoly {
      * @spec.requires p != null
      */
     public RatPoly mul(RatPoly p) {
-        checkRep();
         if (p == null) {
             throw new IllegalArgumentException("p cannot be null");
         }
@@ -326,7 +321,6 @@ public final class RatPoly {
             }
         }
         RatPoly res = new RatPoly(r);
-        checkRep();
         return res;
     }
 
@@ -364,7 +358,6 @@ public final class RatPoly {
      * @spec.requires p != null
      */
     public RatPoly div(RatPoly p) {
-        checkRep();
         if (p.terms.isEmpty() || this.isNaN() || p.isNaN()) {
             return RatPoly.NaN;
         }
@@ -379,7 +372,6 @@ public final class RatPoly {
             q = q.add(s);
             r = r.sub((s.mul(p)));
         }
-        checkRep();
         return q;
     }
 
