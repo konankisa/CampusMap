@@ -7,57 +7,54 @@
 
     ### IntQueue1
 
-    Abstraction Function:
+    Abstraction Function: A linked list queue of integers in this.entries. The queue is empty
+    if it has no integers stored;
 
-
-
-    Representation Invariant:
-
-
+    Representation Invariant: entries != null;
 
 
     ### IntQueue2
 
-    Abstraction Function:
+    Abstraction Function: A circular array queue of integers in this.entries, with this.front pointing to
+    the first element in the queue, and this.size representing the number of elements in the queue;
 
-
-
-    Representation Invariant:
-
-
+    Representation Invariant: entries != null && 0 <= size && 0 <= front < entries.length;
 
 
 2. Group the snapshots of IntQueue2's internal state into groups that have the same abstract state.
-
-
+a, d, and g are equivalent
+c and f are equivalent
+b and h are equivalent
 
 
 3. For each signature below, state and justify in 1-2 sentences (per part) whether the method or constructor
 could possibly expose the representation, given the information available. Explain any assumptions you made.
 
     a. `public int solveEquations(int x, int y, int z)`
-
+        This shouldn't expose the representation since it takes and returns integers, which are immutable,
+        and since int is a primitive type, it will return a copy
 
 
     b. `public String[] decode(boolean slowly)`
-
+        This could pose an issue since it returns a String array, which can be mutable and the client can mutate it,
+        which could expose the rep
 
 
     c. `private Date myBirthday()`
-
+        If the Date returned is not a copy of the original and is mutable, it could expose the rep
 
 
     d. `public String toString()`
-
+        Since String is immutable, this doesn't have any issues of rep exposure
 
 
     e. `public Iterator<Integer> elements()`
-
+        The Iterator can cause rep exposure if it references the original collection not as
+        an unmodifiable list and supports remove
 
 
     f. `public Deck(List<Card> cards)`
-
-
+        This can expose the rep if the constructor directly references the cards list
 
 
 ## Section 2
@@ -67,8 +64,12 @@ Briefly explain why you included the operations you did and why you feel they ar
 interface to a graph. If your design includes multiple classes or interfaces, explain why you
 included each one; if not, explain whether you considered additional classes and why you decided
 not to include them.
-
-
+addEdge, addNode, removeEdge, and removeNode are to add or remove nodes and edges from the graph
+containsNode is to make sure the graph doesn't contain duplicate nodes, or to see whether a node is in the graph
+isEmpty, size, getEdges, and getNodes are to obtain relevant information about the graph or its nodes
+I also added getLabel and getChild as part of the Edge class to return relevant edge information
+I added a separate Edge class because I felt it would be easier to manage and understand how edges work if
+methods regarding a single edge were put in their own class.
 
 
 ## Section 3
