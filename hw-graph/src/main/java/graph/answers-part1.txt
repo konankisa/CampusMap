@@ -65,11 +65,12 @@ interface to a graph. If your design includes multiple classes or interfaces, ex
 included each one; if not, explain whether you considered additional classes and why you decided
 not to include them.
 addEdge, addNode, removeEdge, and removeNode are to add or remove nodes and edges from the graph
-containsNode is to make sure the graph doesn't contain duplicate nodes, or to see whether a node is in the graph
+containsNode is to see whether a node is in the graph, and also makes sure there's no duplicate nodes
 isEmpty, size, getEdges, and getNodes are to obtain relevant information about the graph or its nodes
 I also added getLabel and getChild as part of the Edge class to return relevant edge information
-I added a separate Edge class because I felt it would be easier to manage and understand how edges work if
-methods regarding a single edge were put in their own class.
+Furthermore, I added getData and getChildren to the Node class to return relevant node information
+I added a separate Edge and Node classes because I felt it would be easier to manage and understand how edges
+and nodes work if methods regarding a single edge and node were put in their own classes.
 
 
 ## Section 3
