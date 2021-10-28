@@ -1,0 +1,10 @@
+# Creates an empty graph and adds 2 nodes to it
+
+# Create a graph
+CreateGraph graph
+
+# Add a node
+AddNode graph node1
+
+# Add another node
+AddNode graph node2

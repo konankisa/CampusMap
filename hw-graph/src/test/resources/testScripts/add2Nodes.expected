@@ -1,0 +1,10 @@
+# Creates an empty graph and adds 2 nodes to it
+
+# Create a graph
+created graph graph
+
+# Add a node
+added node node1 to graph
+
+# Add another node
+added node node2 to graph

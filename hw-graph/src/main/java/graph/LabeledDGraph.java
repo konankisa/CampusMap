@@ -3,6 +3,7 @@ package graph;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 
 /**
  * LabeledDGraph represents a mutable directed graph with a finite number of nodes
@@ -28,6 +29,7 @@ public class LabeledDGraph {
      *
      * @param node the node to be added to graph
      * @spec.effects Adds node to graph if not a duplicate
+     * @spec.modifies The graph that the node is added to
      * @spec.requires node != null
      * @return true if node was not already in graph and was added
      */
@@ -42,6 +44,7 @@ public class LabeledDGraph {
      * @param tail the node the edge will point to
      * @param edge the edge connecting 2 nodes
      * @spec.effects Adds a labeled edge between 2 nodes
+     * @spec.modifies The graph that the edge is added to
      * @spec.requires head != null, tail != null, label != null
      * @return true if edge was added between 2 nodes
      */
@@ -54,9 +57,10 @@ public class LabeledDGraph {
      *
      * @param node the node to be removed from graph
      * @spec.effects Removes node from graph if present in the graph
+     * @spec.modifies The graph that the node is removed from
      * @spec.requires node != null
      * @return true if node was in the graph and was deleted
-     * @throws IllegalArgumentException if node is not in graph
+     * @throws NoSuchElementException if node is not in graph
      */
     public boolean removeNode (String node) {
         throw new RuntimeException("removeNode is not yet implemented");
@@ -69,39 +73,25 @@ public class LabeledDGraph {
      * @param tail the node the edge will point to
      * @param edge the edge connecting 2 nodes
      * @spec.effects Removes a labeled edge between 2 nodes
+     * @spec.modifies THe graph that the edge is removed from
      * @spec.requires head != null, tail != null, label != null
      * @return true if edge was removed between 2 nodes
+     * @throws NoSuchElementException if edge is not between the given 2 nodes
      */
     public boolean removeEdge (String head, String tail, String edge) {
         throw new RuntimeException("removeEdge is not yet implemented");
     }
 
     /**
-     * Checks whether the graph contains given node
+     * Returns a list of child nodes of the parent in the graph
      *
-     * @param node the node to check for in the graph
-     * @return true if the graph doesn't have the node
+     * @param node the parent node whose children should be returned
+     * @spec.requires node != null
+     * @return a list of all child nodes of the parent node
+     * @throws NoSuchElementException if node is not in graph
      */
-    public boolean containsNode(String node) {
-        throw new RuntimeException("containsNode is not yet implemented");
-    }
-
-    /**
-     * Checks whether the graph is empty or not
-     *
-     * @return true if graph is empty
-     */
-    public boolean isEmpty() {
-        throw new RuntimeException("isEmpty is not yet implemented");
-    }
-
-    /**
-     * Returns the number of nodes in the graph
-     *
-     * @return a count of the nodes in the graph
-     */
-    public int size() {
-        throw new RuntimeException("size is not yet implemented");
+    public ArrayList<String> getChildren(String node) {
+        throw new RuntimeException("getChildren is not yet implemented");
     }
 
     /**
@@ -111,15 +101,6 @@ public class LabeledDGraph {
      */
     public HashSet<String> getNodes() {
         throw new RuntimeException("getNodes is not yet implemented");
-    }
-
-    /**
-     * Returns a list of all edge labels in the graph
-     *
-     * @return a list of all edge labels in the graph
-     */
-    public ArrayList<String> getEdges() {
-        throw new RuntimeException("getEdges is not yet implemented");
     }
 }
 

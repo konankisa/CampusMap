@@ -1,0 +1,24 @@
+# Creates a graph, adds a node which is
+# the parent of 2 child nodes, and
+# returns a list of the children
+
+# Create a graph
+CreateGraph graph1
+
+# Add a node
+AddNode graph node1
+
+# Add another node
+AddNode graph node2
+
+# Add a third node
+AddNode graph node3
+
+# Add an edge from node1 to node2 in graph
+AddEdge graph node1 node2 edge1
+
+# Add another edge from node1 to node3 in graph
+AddEdge graph node1 node3 edge2
+
+# List the children of the parent node
+ListChildren graph node1

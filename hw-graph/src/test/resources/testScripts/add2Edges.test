@@ -1,0 +1,20 @@
+# Creates an empty graph, adds 3 nodes to it,
+# and adds 2 edges connecting the 3 nodes
+
+# Create a graph
+CreateGraph graph
+
+# Add a node
+AddNode graph node1
+
+# Add another node
+AddNode graph node2
+
+# Add a third node
+AddNode graph node3
+
+# Add an edge from node1 to node2 in graph
+AddEdge graph node1 node2 edge1
+
+# Add another edge from node2 to node3 in graph
+AddEdge graph node2 node3 edge2

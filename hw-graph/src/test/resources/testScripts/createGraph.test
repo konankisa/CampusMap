@@ -1,0 +1,4 @@
+# Creates a graph. Initially has no nodes and edges
+
+# Create a graph
+CreateGraph graph

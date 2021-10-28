@@ -1,0 +1,8 @@
+# Creates an empty graph
+# and lists the nodes
+
+# Create a graph
+CreateGraph graph
+
+# List the nodes in the graph
+ListNodes graph

@@ -1,0 +1,7 @@
+# Creates 2 empty graphs
+
+# Create a graph
+created graph graph1
+
+# Create another graph
+created graph graph2

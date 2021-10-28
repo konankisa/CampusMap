@@ -1,0 +1,20 @@
+# Creates an empty graph, adds 3 nodes to it,
+# and adds 2 edges connecting the 3 nodes
+
+# Create a graph
+created graph graph
+
+# Add a node
+added node node1 to graph
+
+# Add another node
+added node node2 to graph
+
+# Add a third node
+added node node3 to graph
+
+# Add an edge from node1 to node2 in graph
+added edge edge1 from node1 to node2 in graph
+
+# Add another edge from node2 to node3 in graph
+added edge edge2 from node2 to node3 in graph

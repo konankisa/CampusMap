@@ -1,0 +1,11 @@
+# Creates a graph, adds a node, and
+# returns a list of the children
+
+# Create a graph
+created graph graph
+
+# Add a node
+added node node1 to graph
+
+# List the children of the parent node
+the children of node1 in graph are:

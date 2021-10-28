@@ -1,0 +1,11 @@
+# Creates an empty graph, adds a node to it,
+# and adds an edge to itself
+
+# Create a graph
+CreateGraph graph
+
+# Add a node
+AddNode graph node
+
+# Add an edge from node to node in graph
+AddEdge graph node node edge

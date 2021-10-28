@@ -68,7 +68,7 @@ addEdge, addNode, removeEdge, and removeNode are to add or remove nodes and edge
 containsNode is to see whether a node is in the graph, and also makes sure there's no duplicate nodes
 isEmpty, size, getEdges, and getNodes are to obtain relevant information about the graph or its nodes
 I also added getLabel and getChild as part of the Edge class to return relevant edge information
-Furthermore, I added getData and getChildren to the Node class to return relevant node information
+Furthermore, I added getChildren to return relevant node information
 I added a separate Edge class because I felt it would be easier to manage and understand how edges
 work if methods regarding a single edge were put in their own class, but I didn't add it to the spec
 since the implementation is private.
@@ -79,6 +79,5 @@ since the implementation is private.
 
 What was your testing strategy for this assignment? How do your script tests and JUnit tests
 differ from each other (if they do), and why?
-
 
 

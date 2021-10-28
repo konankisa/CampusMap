@@ -1,0 +1,14 @@
+# Creates an empty graph, adds 2 node to it,
+# and adds an edge between the 2 nodes
+
+# Create a graph
+created graph graph
+
+# Add a node
+added node node1 to graph
+
+# Add another node
+added node node2 to graph
+
+# Add an edge from node1 to node2 in graph
+added edge edge from node1 to node2 in graph

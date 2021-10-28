@@ -1,0 +1,14 @@
+# Creates an empty graph, adds 2 nodes to it,
+# and lists the nodes
+
+# Create a graph
+created graph graph
+
+# Add a node
+added node node1 to graph
+
+# Add another node
+added node node2 to graph
+
+# List the nodes in the graph
+graph contains: node1 node2

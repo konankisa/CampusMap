@@ -1,0 +1,7 @@
+# Creates 2 empty graphs
+
+# Create a graph
+CreateGraph graph1
+
+# Create another graph
+CreateGraph graph2
