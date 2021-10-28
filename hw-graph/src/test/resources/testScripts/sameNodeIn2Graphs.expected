@@ -1,0 +1,20 @@
+# Creates 2 empty graphs, adds the same node to both,
+# and lists the node
+
+# Create a graph
+created graph graph1
+
+# Create another graph
+created graph graph2
+
+# Add a node to graph1
+added node node to graph1
+
+# Add a node to graph2
+added node node to graph2
+
+# List the node in graph1
+graph1 contains: node
+
+# List the node in graph2
+graph2 contains: node

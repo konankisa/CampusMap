@@ -64,14 +64,12 @@ Briefly explain why you included the operations you did and why you feel they ar
 interface to a graph. If your design includes multiple classes or interfaces, explain why you
 included each one; if not, explain whether you considered additional classes and why you decided
 not to include them.
-addEdge, addNode, removeEdge, and removeNode are to add or remove nodes and edges from the graph
-containsNode is to see whether a node is in the graph, and also makes sure there's no duplicate nodes
-isEmpty, size, getEdges, and getNodes are to obtain relevant information about the graph or its nodes
+addEdge and addNode are to add nodes and edges to the graph
+Furthermore, I added getChildren and getNodes to return relevant node information
 I also added getLabel and getChild as part of the Edge class to return relevant edge information
-Furthermore, I added getChildren to return relevant node information
 I added a separate Edge class because I felt it would be easier to manage and understand how edges
 work if methods regarding a single edge were put in their own class, but I didn't add it to the spec
-since the implementation is private.
+since the class is private.
 
 
 ## Section 3
@@ -79,5 +77,9 @@ since the implementation is private.
 
 What was your testing strategy for this assignment? How do your script tests and JUnit tests
 differ from each other (if they do), and why?
-
+I wanted to make sure I tested the basic cases for my objects (graph, node, edge), and since
+the script tests basically covers it all, the only test that I have in my JUnit tests is
+an exception test to make sure getChildren throws the exception properly. The script tests
+pretty much check all the necessary test cases (from my knowledge) so the only things that
+the JUnit tests are needed for is for exception checking, at least for now
 

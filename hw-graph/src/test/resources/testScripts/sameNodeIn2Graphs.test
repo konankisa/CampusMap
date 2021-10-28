@@ -1,0 +1,20 @@
+# Creates 2 empty graphs, adds the same node to both,
+# and lists the node
+
+# Create a graph
+CreateGraph graph1
+
+# Create another graph
+CreateGraph graph2
+
+# Add a node to graph1
+AddNode graph1 node
+
+# Add a node to graph2
+AddNode graph2 node
+
+# List the node in graph1
+ListNodes graph1
+
+# List the node in graph2
+ListNodes graph2

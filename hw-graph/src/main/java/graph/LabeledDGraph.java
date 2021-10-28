@@ -11,6 +11,7 @@ import java.util.NoSuchElementException;
  * A node is a string value stored in the graph.
  * An edge stores a label and points from 1 node to another. Edges can point to the same node.
  * Edges cannot have null values, and neither can nodes.
+ * The class currently does not support edge or node removal.
  *
  */
 public class LabeledDGraph {
