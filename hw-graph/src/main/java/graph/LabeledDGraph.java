@@ -53,36 +53,6 @@ public class LabeledDGraph {
     }
 
     /**
-     * Removes a node to the graph if present in the graph
-     *
-     * @param node the node to be removed from graph
-     * @spec.effects Removes node from graph if present in the graph
-     * @spec.modifies The graph that the node is removed from
-     * @spec.requires node != null
-     * @return true if node was in the graph and was deleted
-     * @throws NoSuchElementException if node is not in graph
-     */
-    public boolean removeNode (String node) {
-        throw new RuntimeException("removeNode is not yet implemented");
-    }
-
-    /**
-     * Removes a labeled edge between 2 nodes in the graph
-     *
-     * @param head the node the edge will start from
-     * @param tail the node the edge will point to
-     * @param edge the edge connecting 2 nodes
-     * @spec.effects Removes a labeled edge between 2 nodes
-     * @spec.modifies THe graph that the edge is removed from
-     * @spec.requires head != null, tail != null, label != null
-     * @return true if edge was removed between 2 nodes
-     * @throws NoSuchElementException if edge is not between the given 2 nodes
-     */
-    public boolean removeEdge (String head, String tail, String edge) {
-        throw new RuntimeException("removeEdge is not yet implemented");
-    }
-
-    /**
      * Returns a list of child nodes of the parent in the graph
      *
      * @param node the parent node whose children should be returned

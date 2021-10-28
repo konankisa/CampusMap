@@ -1,0 +1,13 @@
+# Creates 2 empty graphs and adds the same node to both
+
+# Create a graph
+created graph graph1
+
+# Create another graph
+created graph graph2
+
+# Add a node to graph1
+added node node to graph1
+
+# Add a node to graph2
+added node node to graph2

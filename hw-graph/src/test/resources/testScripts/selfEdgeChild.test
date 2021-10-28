@@ -1,5 +1,5 @@
 # Creates an empty graph, adds a node to it,
-# and adds an edge to itself
+# adds an edge to itself, and gets the child
 
 # Create a graph
 CreateGraph graph
@@ -9,3 +9,6 @@ AddNode graph node
 
 # Add an edge from node to node in graph
 AddEdge graph node node edge
+
+# Get the children of node
+ListChildren graph node

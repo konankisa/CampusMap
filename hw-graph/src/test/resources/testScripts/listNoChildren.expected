@@ -4,7 +4,7 @@
 # Create a graph
 created graph graph
 
-# Add a node
+# Add a node to graph
 added node node1 to graph
 
 # List the children of the parent node

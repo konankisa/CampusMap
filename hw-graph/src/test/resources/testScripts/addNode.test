@@ -3,5 +3,5 @@
 # Create a graph
 CreateGraph graph
 
-# Add a node
+# Add a node to graph
 AddNode graph node

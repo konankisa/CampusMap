@@ -1,5 +1,5 @@
 # Creates an empty graph, adds a node to it,
-# and adds an edge to itself
+# adds an edge to itself, and gets the child
 
 # Create a graph
 created graph graph
@@ -9,3 +9,6 @@ added node node to graph
 
 # Add an edge from node to node in graph
 added edge edge from node to node in graph
+
+# Get the children of node
+the children of node in graph are: node(edge)

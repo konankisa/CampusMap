@@ -3,8 +3,8 @@
 # Create a graph
 created graph graph
 
-# Add a node
+# Add a node to graph
 added node node1 to graph
 
-# Add another node
+# Add another node to graph
 added node node2 to graph
