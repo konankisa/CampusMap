@@ -16,9 +16,12 @@
     ### IntQueue2
 
     Abstraction Function: A circular array queue of integers in this.entries, with this.front pointing to
-    the first element in the queue, and this.size representing the number of elements in the queue;
+    the first element in the queue, and this.size representing the number of elements in the queue. The queue is empty
+    if it has no integers stored. If front + size < entries.length then queue: [v_(front),..., v_(front + size - 1)]
+    If values wrap around, the queue looks like so:
+    [v[front],..., v[x], v[0], v[1],..., v[size - (entries.length - front) - 1]]
 
-    Representation Invariant: entries != null && 0 <= size && 0 <= front < entries.length;
+    Representation Invariant: entries != null && 0 <= < entries.length size && 0 <= front < entries.length;
 
 
 2. Group the snapshots of IntQueue2's internal state into groups that have the same abstract state.
@@ -32,7 +35,7 @@ could possibly expose the representation, given the information available. Expla
 
     a. `public int solveEquations(int x, int y, int z)`
         This shouldn't expose the representation since it takes and returns integers, which are immutable,
-        and since int is a primitive type, it will return a copy
+        since int is a primitive type
 
 
     b. `public String[] decode(boolean slowly)`
@@ -77,8 +80,9 @@ since the class is private.
 
 What was your testing strategy for this assignment? How do your script tests and JUnit tests
 differ from each other (if they do), and why?
-I wanted to make sure I tested the basic cases for my objects (graph, node, edge), and since
-the script tests basically covers it all, the only test that I have in my JUnit tests is
+I wanted to make sure I tested the basic cases for my objects (graph, node, edge) and some edge cases,
+somewhat following the 0,1,2 strategy that was mentioned in the HW spec, and since the script tests
+basically cover it all, the only test that I have in my JUnit tests is
 an exception test to make sure getChildren throws the exception properly. The script tests
 pretty much check all the necessary test cases (from my knowledge) so the only things that
 the JUnit tests are needed for is for exception checking, at least for now
