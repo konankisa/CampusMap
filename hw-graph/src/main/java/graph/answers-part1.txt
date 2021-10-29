@@ -28,6 +28,7 @@
 a, d, and g are equivalent
 c and f are equivalent
 b and h are equivalent
+e is the only one that doesn't match any others
 
 
 3. For each signature below, state and justify in 1-2 sentences (per part) whether the method or constructor
@@ -85,5 +86,6 @@ somewhat following the 0,1,2 strategy that was mentioned in the HW spec, and sin
 basically cover it all, the only test that I have in my JUnit tests is
 an exception test to make sure getChildren throws the exception properly. The script tests
 pretty much check all the necessary test cases (from my knowledge) so the only things that
-the JUnit tests are needed for is for exception checking, at least for now
+the JUnit tests are needed for is for exception checking, at least for now. I will be adding
+more tests as my ADT expands and becomes more refined
 
