@@ -38,10 +38,13 @@ public class LabeledDGraph {
      * @return true if node was not already in graph and was added
      */
     public boolean addNode(String node) {
+        if (node == null) {
+            throw new IllegalArgumentException("Node cannot be null");
+        }
         if (containsNode(node)) {
             return false;
         }
-        graphList.put(node, null);
+        graphList.put(node, new ArrayList<>());
         return true;
     }
 
@@ -98,6 +101,9 @@ public class LabeledDGraph {
      * @return true if the graph doesn't have the node
      */
     public boolean containsNode(String node) {
+        if (node == null) {
+            throw new IllegalArgumentException("Node cannot be null");
+        }
         return graphList.containsKey(node);
     }
 
@@ -134,13 +140,17 @@ public class LabeledDGraph {
      * @return a list of all edge labels in the graph
      */
     public ArrayList<String> getEdges() {
+        if (graphList.isEmpty()) {
+            return new ArrayList<>();
+        }
         Iterator<ArrayList<Edge>> edgeIterator = graphList.values().iterator();
         ArrayList<String> res = new ArrayList<>();
         while (edgeIterator.hasNext()) {
-            for (int i = 0; i < edgeIterator)
-            res.add(edgeIterator.next().get())
+            for (int i = 0; i < edgeIterator.next().size(); i++) {
+                res.add(edgeIterator.next().get(i).label);
+            }
         }
-        return new ArrayList<String>(graphList.values());
+        return res;
     }
 
     /**
@@ -152,6 +162,9 @@ public class LabeledDGraph {
      * @throws NoSuchElementException if node is not in graph
      */
     public ArrayList<String> getChildren(String node) {
+        if (node == null) {
+            throw new IllegalArgumentException("Node cannot be null");
+        }
         Iterator<Edge> edgeIterator = graphList.get(node).iterator();
         ArrayList<String> children = new ArrayList<>();
         while (edgeIterator.hasNext()) {
