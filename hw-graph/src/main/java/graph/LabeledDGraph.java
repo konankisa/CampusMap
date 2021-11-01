@@ -9,7 +9,8 @@ import java.util.*;
  * A node is a string value stored in the graph.
  * An edge stores a label and points from 1 node to another. Edges can point to the same node.
  *
- * @specfield graphList: a graph that
+ * @spec.specfield graph: HashMap<String, HashSet<Edge>> // A graph that store nodes and their
+ *                                                           // corresponding sets of edges
  */
 @SuppressWarnings("unused")
 public class LabeledDGraph {
@@ -19,12 +20,12 @@ public class LabeledDGraph {
     private HashMap<String, HashSet<Edge>> graph;
 
     // Representation Invariant:
-    // graphList != null
+    // graph != null
     // Nodes cannot be null. The corresponding edge sets to the nodes cannot be null
     // All the edges within the sets cannot be null
 
     // Abstraction Function:
-    // A LabaledDGraph g represents a directed graph with nodes and interconnecting edges
+    // A LabeledDGraph g represents a directed graph with nodes and interconnecting edges
     // connecting the nodes such that g.keySet() is the set of all nodes in the graph, and
     // the list of outgoing edges from a node n is g.get(n). The graph is empty if there are
     // no nodes present in it.
@@ -36,6 +37,17 @@ public class LabeledDGraph {
      */
     public LabeledDGraph() {
         this.graph = new HashMap<>();
+    }
+
+    private void checkRep() {
+        assert (graph != null) : "graph == null";
+        for (String node : getNodes()) {
+            assert (node != null) : "Node == null";
+            assert (graph.get(node) != null) : "Edge set == null";
+        }
+        for (Edge edge : getEdges()) {
+            assert (edge != null) : "Edge == null";
+        }
     }
 
     /**
@@ -164,9 +176,9 @@ public class LabeledDGraph {
     }
 
     /**
-     * Returns a list of all edge labels in the graph
+     * Returns a list of all edges in the graph
      *
-     * @return a list of all edge labels in the graph
+     * @return a list of all edges in the graph
      */
     public HashSet<Edge> getEdges() {
         if (graph.isEmpty()) {
@@ -261,6 +273,11 @@ public class LabeledDGraph {
         // An Edge e represents a labeled edge without an origin such that
         // e.label = this.label
         // e.child = this.child
+
+        private void checkRep() {
+            assert (label != null) : "Label == null";
+            assert (child != null) : "Child == null";
+        }
 
         /**
          * Constructor that creates a labeled edge

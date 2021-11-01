@@ -15,7 +15,7 @@ public class GraphTest {
     LabeledDGraph graph1 = new LabeledDGraph();
 
     ///////////////////////////////////////////////////////////////////////////////////////
-    ////  getChildren test
+    ////  getChildren exception test
     ///////////////////////////////////////////////////////////////////////////////////////
 
     @Test(expected = NoSuchElementException.class)
@@ -26,8 +26,5 @@ public class GraphTest {
         graph1.getChildren("node3");
     }
 
-    public void edgeTest() {
-        graph1.addEdge("test", "test", "test");
 
-    }
 }
