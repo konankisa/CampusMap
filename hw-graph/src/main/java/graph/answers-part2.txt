@@ -15,16 +15,15 @@ A few examples of possible Graph representations:
 1. In two or three sentences, explain an advantage and a disadvantage of each of the
 representations listed above (for example, in terms of runtime complexity, space
 complexity, or ease of implementation).
-
-
-
+Collections:
+Adjacency list:
+Adjacency matrix:
 
 2. In two to three sentences, describe the representation you chose and explain why you
 chose it. If you chose to use a different representation than one of the three we described
 above, be sure to list its advantages and disadvantages, too.
-
-
-
+I chose to use an adjacency list, where I have a HashMap<String, ArrayList<Edge>>.
+I chose this representation because
 
 ## Section 4
 ###########################################################################
@@ -40,5 +39,12 @@ tests alone are sufficient.
 2. Did you make any changes to your specifications as you were implementing your Graph? (yes/no)
 If yes, describe your changes and why you made them.
 
+Yes; I made a few changes regarding the methods my Graph ADT had and a private inner class:
+I added an Edge private class to maintain an edge. It contains 2 getters, hashCode, and equals,
+as recommended by the spec. This is so that it is easier to keep track of each edge and its relation
+to surrounding nodes. I added a class field graphList that stores all the nodes and the corresponding edges
+I also added remove methods for edges and nodes, a containsNode method, a size method, a clear method,
+an isEmpty method, and a getEdges method. This is so that I have more flexibility in terms of managing a
+graph, for later work when I use my Graph ADT
 
 
