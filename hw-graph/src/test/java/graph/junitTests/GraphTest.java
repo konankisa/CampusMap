@@ -25,4 +25,9 @@ public class GraphTest {
         graph1.addEdge("node1", "node2", "edge1");
         graph1.getChildren("node3");
     }
+
+    public void edgeTest() {
+        graph1.addEdge("test", "test", "test");
+
+    }
 }

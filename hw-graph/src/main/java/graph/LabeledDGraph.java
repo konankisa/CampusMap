@@ -9,13 +9,14 @@ import java.util.*;
  * A node is a string value stored in the graph.
  * An edge stores a label and points from 1 node to another. Edges can point to the same node.
  *
+ * @specfield graphList: a graph that
  */
 @SuppressWarnings("unused")
 public class LabeledDGraph {
     /**
      * Holds all the nodes and the edges
      */
-    private HashMap<String, HashSet<Edge>> graphList;
+    private HashMap<String, HashSet<Edge>> graph;
 
     // Representation Invariant:
     // graphList != null
@@ -34,7 +35,7 @@ public class LabeledDGraph {
      * @spec.effects Constructs an empty graph
      */
     public LabeledDGraph() {
-        this.graphList = new HashMap<>();
+        this.graph = new HashMap<>();
     }
 
     /**
@@ -53,7 +54,7 @@ public class LabeledDGraph {
         if (containsNode(node)) {
             return false;
         }
-        graphList.put(node, new HashSet<>());
+        graph.put(node, new HashSet<>());
         return true;
     }
 
@@ -78,11 +79,12 @@ public class LabeledDGraph {
             throw new IllegalArgumentException("Edge cannot be null");
         }
         addNode(head);
+        addNode(tail);
         Edge toBeIns = new Edge(edge, tail);
-        if (graphList.get(head).contains(toBeIns)) {
+        if (graph.get(head).contains(toBeIns)) {
             return false;
         }
-        graphList.get(head).add(toBeIns);
+        graph.get(head).add(toBeIns);
         return true;
     }
 
@@ -103,8 +105,18 @@ public class LabeledDGraph {
         if (!containsNode(node)) {
             throw new NoSuchElementException("Node is not in graph");
         }
-        graphList.keySet().remove(node);
-        return true;
+        boolean isRemoved = graph.keySet().remove(node);
+        if (isRemoved) {
+            for (String node2 : graph.keySet()) {
+                HashSet<Edge> edges = graph.get(node2);
+                for (Edge edge : edges) {
+                    if (edge.getChild().equals(node)) {
+                        removeEdge(node2, edge.getLabel(), node);
+                    }
+                }
+            }
+        }
+        return isRemoved;
     }
 
     /**
@@ -117,10 +129,25 @@ public class LabeledDGraph {
      * @spec.modifies THe graph that the edge is removed from
      * @spec.requires head != null, tail != null, label != null
      * @return true if edge was removed between 2 nodes
-     * @throws NoSuchElementException if edge is not between the given 2 nodes
+     * @throws IllegalArgumentException if head or tail not in graph
      */
     public boolean removeEdge(String head, String edge, String tail) {
-        throw new RuntimeException("removeEdge is not yet implemented");
+        if (head == null || tail == null) {
+            throw new IllegalArgumentException("A node cannot be null");
+        }
+        if (edge == null) {
+            throw new IllegalArgumentException("Edge cannot be null");
+        }
+        if (!graph.containsKey(head)) {
+            throw new IllegalArgumentException("Head is not in the graph");
+        }
+        HashSet<Edge> edges = graph.get(head);
+        Edge toBeRem = new Edge(edge, tail);
+        if (!edges.contains(toBeRem)) {
+            return false;
+        }
+        edges.remove(toBeRem);
+        return true;
     }
 
     /**
@@ -130,7 +157,7 @@ public class LabeledDGraph {
      */
     public HashSet<String> getNodes() {
         HashSet<String> res = new HashSet<>();
-        for (String node : graphList.keySet()) {
+        for (String node : graph.keySet()) {
             res.add(node);
         }
         return res;
@@ -142,39 +169,16 @@ public class LabeledDGraph {
      * @return a list of all edge labels in the graph
      */
     public HashSet<Edge> getEdges() {
-        if (graphList.isEmpty()) {
+        if (graph.isEmpty()) {
             return new HashSet<>();
         }
         HashSet<Edge> res = new HashSet<>();
-        for (HashSet<Edge> edges : graphList.values()) {
+        for (HashSet<Edge> edges : graph.values()) {
             res.addAll(edges);
         }
         return res;
     }
 
-    public static void main (String[] args) {
-        LabeledDGraph graph = new LabeledDGraph();
-        graph.addNode("hi");
-        graph.addEdge("hi", "im", "me");
-        System.out.println(graph.getNodes());
-        graph.addEdge("me", "but", "sad");
-        System.out.println(graph.getNodes());
-        graph.addEdge("sad", "yet", "happy");
-        System.out.println(graph.getNodes());
-        HashSet<Edge> edges = graph.getEdges();
-        ArrayList<String> labels = new ArrayList<>();
-        for (Edge edge : edges) {
-            labels.add(edge.label);
-        }
-        System.out.println(labels);
-        if (graph.containsNode("me")) {
-            System.out.println("me is in the graph");
-        }
-        System.out.println(graph.getEdges().size());
-        System.out.println(graph.isEmpty());
-        graph.clear();
-        System.out.println(graph.getNodes());
-    }
     /**
      * Returns a list of child nodes of the parent in the graph
      *
@@ -190,7 +194,7 @@ public class LabeledDGraph {
         if (!containsNode(node)) {
             throw new NoSuchElementException("Node is not in graph");
         }
-        Iterator<Edge> edgeIterator = graphList.get(node).iterator();
+        Iterator<Edge> edgeIterator = graph.get(node).iterator();
         ArrayList<String> children = new ArrayList<>();
         while (edgeIterator.hasNext()) {
             children.add(edgeIterator.next().child);
@@ -209,7 +213,7 @@ public class LabeledDGraph {
         if (node == null) {
             throw new IllegalArgumentException("Node cannot be null");
         }
-        return graphList.containsKey(node);
+        return graph.containsKey(node);
     }
 
     /**
@@ -218,7 +222,7 @@ public class LabeledDGraph {
      * @return true if graph is empty
      */
     public boolean isEmpty() {
-        return graphList.isEmpty();
+        return graph.isEmpty();
     }
 
     /**
@@ -227,18 +231,18 @@ public class LabeledDGraph {
      * @return a count of the nodes in the graph
      */
     public int size() {
-        return graphList.keySet().size();
+        return graph.keySet().size();
     }
 
     /**
      * Clears the graph completely
      */
     public void clear() {
-        graphList.clear();
+        graph.clear();
     }
 
     // A private class that represents an edge that stores a string label and a string child node
-    private class Edge {
+    private static class Edge {
 
         /**
          * A string representing the label of an edge
@@ -250,7 +254,13 @@ public class LabeledDGraph {
          */
         private final String child;
 
+        // Representation Invariant:
+        // label != null and child != null
 
+        // Abstraction Function:
+        // An Edge e represents a labeled edge without an origin such that
+        // e.label = this.label
+        // e.child = this.child
 
         /**
          * Constructor that creates a labeled edge
@@ -308,5 +318,37 @@ public class LabeledDGraph {
                     && res.getChild().equals(this.getChild());
         }
     }
+
+    /*
+        public static void main (String[] args) {
+        LabeledDGraph graph = new LabeledDGraph();
+        graph.addNode("hi");
+        graph.addEdge("hi", "im", "me");
+        System.out.println(graph.getNodes());
+        graph.addEdge("me", "but", "sad");
+        System.out.println(graph.getNodes());
+        graph.addEdge("sad", "yet", "happy");
+        System.out.println(graph.getNodes());
+        HashSet<Edge> edges = graph.getEdges();
+        ArrayList<String> labels = new ArrayList<>();
+        for (Edge edge : edges) {
+            labels.add(edge.label);
+        }
+        System.out.println(labels);
+        System.out.println(graph.removeEdge("hi", "im", "me"));
+        HashSet<Edge> edges2 = graph.getEdges();
+        for (Edge edge : edges2) {
+            labels.add(edge.label);
+        }
+        System.out.println(labels);
+        if (graph.containsNode("me")) {
+            System.out.println("me is in the graph");
+        }
+        System.out.println(graph.getEdges().size());
+        System.out.println(graph.isEmpty());
+        graph.removeNode("happy");
+        System.out.println(graph.getNodes());
+    }
+     */
 }
 
