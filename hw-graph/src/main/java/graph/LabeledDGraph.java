@@ -217,19 +217,19 @@ public class LabeledDGraph {
      * @param node the parent node whose children will be sorted
      * @return a sorted map of edge labels and children nodes
      */
-    public Map<String, String> sortedChildren(String node) {
+    public List<Edge> sortedChildren(String node) {
         checkRep();
         if (graph.isEmpty()) {
-            return new TreeMap<>();
+            return new ArrayList<>();
         }
-        Map<String, String> res = new TreeMap<>();
+        //Map<String, String> res = new TreeMap<>();
         List<Edge> sort = new ArrayList<>(graph.get(node));
         Collections.sort(sort);
-        for (Edge edge : sort) {
-            res.put(edge.child, edge.label);
-        }
+        //for (Edge edge : sort) {
+        //    res.put(edge.child, edge.label);
+        //}
         checkRep();
-        return res;
+        return sort;
     }
 
     /**
@@ -300,14 +300,13 @@ public class LabeledDGraph {
         graph.clear();
     }
 
-    // A private class that represents an edge that stores a string label and a string child node
-
     /**
+     * A public inner class that represents an edge that stores a string label and a string child node
      *
      * @spec.specfield label: String // The string representing an edge
      * @spec.specfield child: String // THe node that the edge is pointing to
      */
-    private static class Edge implements Comparable<Edge> {
+    public static class Edge implements Comparable<Edge> {
 
         /**
          * A string representing the label of an edge

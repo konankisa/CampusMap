@@ -192,9 +192,9 @@ public class GraphTestDriver {
     private void listChildren(String graphName, String parentName) {
         LabeledDGraph graph = graphs.get(graphName);
         String res = "the children of " + parentName + " in " + graphName + " are:";
-        Map<String, String> sortedEdges = new TreeMap<>(graph.sortedChildren(parentName));
-        for (String node : sortedEdges.keySet()) {
-            res += " " + node + "(" + sortedEdges.get(node) + ")";
+        List<LabeledDGraph.Edge> sortedEdges = new ArrayList<>(graph.sortedChildren(parentName));
+        for (LabeledDGraph.Edge edge : sortedEdges) {
+            res += " " + edge.getChild() + "(" + edge.getLabel() + ")";
         }
         output.println(res);
     }
