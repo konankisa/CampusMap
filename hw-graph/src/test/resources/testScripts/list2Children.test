@@ -3,7 +3,7 @@
 # returns a list of the children
 
 # Create a graph
-CreateGraph graph1
+CreateGraph graph
 
 # Add a node to graph
 AddNode graph node1
