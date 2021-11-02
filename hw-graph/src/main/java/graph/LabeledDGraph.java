@@ -222,12 +222,8 @@ public class LabeledDGraph {
         if (graph.isEmpty()) {
             return new ArrayList<>();
         }
-        //Map<String, String> res = new TreeMap<>();
         List<Edge> sort = new ArrayList<>(graph.get(node));
         Collections.sort(sort);
-        //for (Edge edge : sort) {
-        //    res.put(edge.child, edge.label);
-        //}
         checkRep();
         return sort;
     }
@@ -298,6 +294,7 @@ public class LabeledDGraph {
     public void clear() {
         checkRep();
         graph.clear();
+        checkRep();
     }
 
     /**
