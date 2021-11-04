@@ -10,8 +10,6 @@ import java.util.*;
  * An edge stores a label and points from 1 node to another. Edges can point to the same node.
  * No 2 edges with the same label can point to the same child
  *
- * @spec.specfield graph: HashMap<String, HashSet<Edge>> // A graph that store nodes and their
- *                                                           // corresponding sets of edges
  */
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class LabeledDGraph {
@@ -225,7 +223,7 @@ public class LabeledDGraph {
     }
 
     /**
-     * A public inner class that represents an edge that stores a string label and a string child node
+     * A private inner class that represents an edge that stores a string label and a string child node
      *
      * @spec.specfield label: String // The string representing an edge
      * @spec.specfield child: String // The node that the edge is pointing to
