@@ -35,9 +35,17 @@ parent node, rather than just 2 nodes and the edges they share between them.
 
 1. Describe any new tests you added and why you added them, or why you feel that your original
 tests alone are sufficient.
-I added a lot of JUnit tests after I implemented my Graph ADT in order to test the methods that my
-script tests couldn't. A list of the tests that I've added:
-
+I added some JUnit tests after I implemented my Graph ADT in order to test the new methods that I added
+that my script tests couldn't. A list of the tests that I've added:
+graphHasNode();
+graphHasDifferentNode();
+graphHasNoNode();
+sizeZero();
+sizeMultipleNodesAdded();
+sizeOfHugeGraph();
+graphIsEmpty();
+graphIsNotEmpty();
+clearGraph();
 
 2. Did you make any changes to your specifications as you were implementing your Graph? (yes/no)
 If yes, describe your changes and why you made them.
