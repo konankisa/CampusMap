@@ -8,7 +8,6 @@ import java.util.*;
  * and edges associated with the nodes. Each node can only appear once in the graph.
  * A node is a string value stored in the graph.
  * An edge stores a label and points from 1 node to another. Edges can point to the same node.
- * No 2 edges with the same label can point to the same child
  *
  */
 @SuppressWarnings({"unused", "FieldCanBeLocal"})

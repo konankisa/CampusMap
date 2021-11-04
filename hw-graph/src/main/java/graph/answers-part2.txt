@@ -46,6 +46,7 @@ sizeOfHugeGraph(): Tests the size of a huge graph;
 graphIsEmpty(): Tests if the graph is empty;
 graphIsNotEmpty(): Tests if the graph is not empty;
 clearGraph(): Tests if the graph is cleared;
+I also added a couple of script tests to check some edges' edge cases. :)
 
 2. Did you make any changes to your specifications as you were implementing your Graph? (yes/no)
 If yes, describe your changes and why you made them.
