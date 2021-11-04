@@ -191,12 +191,13 @@ public class GraphTestDriver {
 
     private void listChildren(String graphName, String parentName) {
         LabeledDGraph graph = graphs.get(graphName);
+        HashSet<String> children = graph.getChildren(parentName);
+        String[] sort = children.toArray(new String[0]);
+        Arrays.sort(sort);
         String res = "the children of " + parentName + " in " + graphName + " are:";
-        List<LabeledDGraph.Edge> sortedEdges = new ArrayList<>(graph.sortedChildren(parentName));
-        for (LabeledDGraph.Edge edge : sortedEdges) {
-            res += " " + edge.getChild() + "(" + edge.getLabel() + ")";
-        }
-        output.println(res);
+        String finalList = Arrays.toString(sort).replace("[", "")
+                .replace("]", "").replace(",", "");
+        output.println(res + finalList);
     }
 
     /**

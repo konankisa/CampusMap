@@ -1,0 +1,21 @@
+# Creates an empty graph, adds 2 nodes to it,
+# and adds the same edge to the same nodes,
+# then checks the children
+
+# Create a graph
+CreateGraph graph
+
+# Add a node to graph
+AddNode graph node1
+
+# Add another node to graph
+AddNode graph node2
+
+# Add an edge from node1 to node2 in graph
+AddEdge graph node1 node2 edge1
+
+# Add the same edge from node1 to node2 in graph
+AddEdge graph node1 node2 edge1
+
+# List the children of the parent node
+ListChildren graph node1

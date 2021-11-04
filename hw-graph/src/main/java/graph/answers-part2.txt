@@ -15,15 +15,18 @@ A few examples of possible Graph representations:
 1. In two or three sentences, explain an advantage and a disadvantage of each of the
 representations listed above (for example, in terms of runtime complexity, space
 complexity, or ease of implementation).
-Collections:
-Adjacency list:
-Adjacency matrix:
+Collections: Very quick to add new nodes or edges. Harder to relate nodes and edges together since they're just collections
+Adjacency list: Very quick to add new nodes or edges. Harder to find nodes/edges if they all map to 1 specific node
+Adjacency matrix: Very quick to check if an edge exists between 2 nodes. However, it takes up a lot of space to store the nodes and edges
 
 2. In two to three sentences, describe the representation you chose and explain why you
 chose it. If you chose to use a different representation than one of the three we described
 above, be sure to list its advantages and disadvantages, too.
-I chose to use an adjacency list, where I have a HashMap<String, ArrayList<Edge>>.
-I chose this representation because
+I chose to use an adjacency list, where I have a HashMap<String, HashSet<Edge>>. I chose this representation because
+I thought it was a fine balance of ease of implementation and efficiency, since accessing times for edges shouldn't be
+that much worse than an adjacency matrix, while being less complicated to implement. I also felt it would be easier overall
+to access nodes and their corresponding edges and children via an adjacency list since it gives me a set of edges for a
+parent node, rather than just 2 nodes and the edges they share between them.
 
 ## Section 4
 ###########################################################################
@@ -32,8 +35,8 @@ I chose this representation because
 
 1. Describe any new tests you added and why you added them, or why you feel that your original
 tests alone are sufficient.
-
-
+I added a lot of JUnit tests after I implemented my Graph ADT in order to test the methods that my
+script tests couldn't. A list of the tests that I've added:
 
 
 2. Did you make any changes to your specifications as you were implementing your Graph? (yes/no)
@@ -42,9 +45,6 @@ If yes, describe your changes and why you made them.
 Yes; I made a few changes regarding the methods my Graph ADT had and a private inner class:
 I added an Edge private class to maintain an edge. It contains 2 getters, hashCode, and equals,
 as recommended by the spec. This is so that it is easier to keep track of each edge and its relation
-to surrounding nodes. I added a class field graphList that stores all the nodes and the corresponding edges
-I also added remove methods for edges and nodes, a containsNode method, a size method, a clear method,
-an isEmpty method, and a getEdges method. This is so that I have more flexibility in terms of managing a
-graph, for later work when I use my Graph ADT
-
-
+to surrounding nodes. I added a class field graph that stores all the nodes and the corresponding edges
+I also added a containsNode method, a size method, a clear method, an isEmpty method, and a getEdges method,
+so that I have more flexibility in terms of managing a graph, for later work when I use my Graph ADT.
