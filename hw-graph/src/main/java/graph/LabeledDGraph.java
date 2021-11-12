@@ -130,21 +130,22 @@ public class LabeledDGraph {
     }
 
     /**
-     * Returns a list of all edge labels in the graph
+     * Returns a list of all edge labels of the given node
      *
-     * @return a list of all edge labels in the graph
+     * @param node the node whose edges will be returned
+     * @spec.requires node != null
+     * @return a list of all edge labels of the given node
      */
-    public HashSet<String> getEdges() {
+    public HashSet<String> getEdges(String node) {
         checkRep();
+        if (node == null) {
+            throw new IllegalArgumentException("Node cannot be null");
+        }
         if (graph.isEmpty()) {
             return new HashSet<>();
         }
-        HashSet<Edge> res = new HashSet<>();
         HashSet<String> finalRes = new HashSet<>();
-        for (HashSet<Edge> edges : graph.values()) {
-            res.addAll(edges);
-        }
-        for (Edge edge : res) {
+        for (Edge edge : graph.get(node)) {
             finalRes.add(edge.getLabel());
         }
         checkRep();
@@ -159,7 +160,7 @@ public class LabeledDGraph {
      * @return a list of all child nodes of the parent node
      * @throws NoSuchElementException if node is not in graph
      */
-    public HashSet<String> getChildren(String node) {
+    public HashSet<Edge> getChildren(String node) {
         checkRep();
         if (node == null) {
             throw new IllegalArgumentException("Node cannot be null");
@@ -168,10 +169,9 @@ public class LabeledDGraph {
             throw new NoSuchElementException("Node is not in graph");
         }
         Iterator<Edge> edgeIterator = graph.get(node).iterator();
-        HashSet<String> children = new HashSet<>();
+        HashSet<Edge> children = new HashSet<>();
         while (edgeIterator.hasNext()) {
-            Edge curChild = edgeIterator.next();
-            children.add(" " + curChild.getChild() + "(" + curChild.getLabel() + ")");
+            children.add(edgeIterator.next());
         }
         checkRep();
         return children;
@@ -222,12 +222,12 @@ public class LabeledDGraph {
     }
 
     /**
-     * A private inner class that represents an edge that stores a string label and a string child node
+     * A public inner class that represents an edge that stores a string label and a string child node
      *
      * @spec.specfield label: String // The string representing an edge
      * @spec.specfield child: String // The node that the edge is pointing to
      */
-    private static class Edge {
+    public static class Edge implements Comparable<Edge> {
 
         /**
          * A string representing the label of an edge
@@ -294,6 +294,7 @@ public class LabeledDGraph {
          *
          * @return hashcode of the current edge
          */
+        @Override
         public int hashCode() {
             return label.hashCode() * child.hashCode();
         }
@@ -305,6 +306,7 @@ public class LabeledDGraph {
          * @return true iff 'o' is an instance of an Edge and 'this' and 'o' represent the same
          * Edge.
          */
+        @Override
         public boolean equals (Object o) {
             if (!(o instanceof Edge)) {
                 return false;
@@ -312,6 +314,23 @@ public class LabeledDGraph {
             Edge res = (Edge) o;
             return res.getLabel().equals(this.getLabel())
                     && res.getChild().equals(this.getChild());
+        }
+
+        /**
+         * Compares this object with the given object for order
+         *
+         * @param o the object being compared
+         * @return a negative, 0, or positive number if this is less than, equal to, or greater than given object
+         */
+        @Override
+        public int compareTo(Edge o) {
+            if (!this.getChild().equals(o.getChild())) {
+                return this.getChild().compareTo(o.getChild());
+            }
+            if (!this.getLabel().equals(o.getLabel())) {
+                return this.getLabel().compareTo(o.getLabel());
+            }
+            return 0;
         }
     }
 

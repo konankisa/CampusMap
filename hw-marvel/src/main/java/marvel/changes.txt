@@ -1,2 +1,9 @@
 Briefly list any changes you made to your graph class during hw-marvel, and why you made those changes.
 
+I changed my getEdges() method to now return the edges of the given node rather than all the edges in the graph,
+since I realize that getting one node's edges is far more useful in determining a path than just a list of all
+edges present in the graph.
+I also made my Edge class public, which will make accessing the children node much easier. I changed parts of my
+getChildren() method and listChildren in GraphTestDriver to accommodate for this change. I also made Edge implement
+Comparable<Edge> so comparisons would be a lot simpler later on, rather than needing a Comparator each time I wanted
+to check the order.
