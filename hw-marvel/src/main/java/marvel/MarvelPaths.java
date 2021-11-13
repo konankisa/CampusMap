@@ -20,7 +20,7 @@ public class MarvelPaths {
     // it, then call its methods on that instance.
 
     /**
-     * Creates a LabeledDGraph of characters and the b  ooks they appear in as nodes and edges respectively
+     * Creates a LabeledDGraph of characters and the books they appear in as nodes and edges respectively
      *
      * @param filename the name of the file with the data of characters and books
      * @spec.requires filename != null
@@ -31,7 +31,7 @@ public class MarvelPaths {
             throw new IllegalArgumentException("File name cannot be null");
         }
         LabeledDGraph marvelPaths = new LabeledDGraph();
-        ArrayList<String> chars = new ArrayList<>();
+        //ArrayList<String> chars = new ArrayList<>();
         HashMap<String, ArrayList<String>> parsedList = MarvelParser.parseData(filename);
         //for (String character : chars) {
         //    marvelPaths.addNode(character);
