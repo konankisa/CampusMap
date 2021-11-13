@@ -100,9 +100,10 @@ public class MarvelPaths {
         LabeledDGraph marvelGraph = pathsGraph("marvel.csv");
         Scanner input = new Scanner(System.in);
         String res = "";
-        System.out.println("Enter the name of the first character");
+        System.out.println("Enter the names of the characters in all caps, with hyphens in between words");
+        System.out.println("Enter the name of the first character: ");
         String src = input.nextLine();
-        System.out.println("Enter the name of the second character");
+        System.out.println("Enter the name of the second character: ");
         String dest = input.nextLine();
         ArrayList<LabeledDGraph.Edge> bfsList = BFS(src, dest, marvelGraph);
         if (!marvelGraph.containsNode(src) && !marvelGraph.containsNode(dest)) {
@@ -124,5 +125,6 @@ public class MarvelPaths {
             }
         }
         System.out.println(res);
+        input.close();
     }
 }
