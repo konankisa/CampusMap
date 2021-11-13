@@ -1,0 +1,17 @@
+# Test to see if a non-existing/incorrect caps
+# destination character throws an error
+
+created graph characters
+added node GORILLA-MAN to characters
+added node HAWK to characters
+added node VENUS-II to characters
+added edge AVF-4 from GORILLA-MAN to HAWK in characters
+added edge AVF-5 from HAWK to VENUS-II in characters
+
+path from GORILLA-MAN to VENUS-II:
+GORILLA-MAN to HAWK via AVF-4
+HAWK to VENUS-II via AVF-5
+
+unknown: TESTER-MAN
+
+unknown: gorilla-man
