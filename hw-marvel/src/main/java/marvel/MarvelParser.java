@@ -41,7 +41,6 @@ public class MarvelParser {
             if (!charBooks.containsKey(temp[1])) {
                 charBooks.put(temp[1], new ArrayList<>());
             }
-            //characters.add(temp[0]);
             charBooks.get(temp[1]).add(temp[0]);
         }
         return charBooks;

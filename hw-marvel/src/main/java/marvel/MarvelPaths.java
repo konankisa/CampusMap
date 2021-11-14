@@ -31,11 +31,7 @@ public class MarvelPaths {
             throw new IllegalArgumentException("File name cannot be null");
         }
         LabeledDGraph marvelPaths = new LabeledDGraph();
-        //ArrayList<String> chars = new ArrayList<>();
         HashMap<String, ArrayList<String>> parsedList = MarvelParser.parseData(filename);
-        //for (String character : chars) {
-        //    marvelPaths.addNode(character);
-        //}
         for (String book : parsedList.keySet()) {
             ArrayList<String> curBookChars = parsedList.get(book);
             int i = 1;
