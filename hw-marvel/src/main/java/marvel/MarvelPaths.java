@@ -96,6 +96,10 @@ public class MarvelPaths {
         return null;
     }
 
+    /**
+     * The entry point to the class
+     * @param args the command-line arguments provided to the system
+     */
     public static void main (String[] args) {
         LabeledDGraph marvelGraph = pathsGraph("marvel.csv");
         Scanner input = new Scanner(System.in);
