@@ -15,7 +15,7 @@ public class MarvelPathsTest {
     @Rule
     public Timeout timeout = Timeout.seconds(10);
 
-    LabeledDGraph test = new LabeledDGraph();
+    LabeledDGraph<String, String> test = new LabeledDGraph<>();
 
     ///////////////////////////////////////////////////////////////////////////////////////
     ////  pathsGraph exception test

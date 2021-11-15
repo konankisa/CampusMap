@@ -26,11 +26,11 @@ public class MarvelPaths {
      * @spec.requires filename != null
      * @return a LabeledDGraph of characters and their books
      */
-    public static LabeledDGraph pathsGraph(String filename) {
+    public static LabeledDGraph<String, String> pathsGraph(String filename) {
         if (filename == null) {
             throw new IllegalArgumentException("File name cannot be null");
         }
-        LabeledDGraph marvelPaths = new LabeledDGraph();
+        LabeledDGraph<String, String> marvelPaths = new LabeledDGraph<>();
         HashMap<String, ArrayList<String>> parsedList = MarvelParser.parseData(filename);
         for (String book : parsedList.keySet()) {
             ArrayList<String> curBookChars = parsedList.get(book);
@@ -58,7 +58,7 @@ public class MarvelPaths {
      * @spec.requires graph != null, start != null, end != null
      * @return the shortest path between 2 characters
      */
-    public static ArrayList<LabeledDGraph.Edge> BFS(String start, String end, LabeledDGraph graph) {
+    public static ArrayList<LabeledDGraph.Edge<String, String>> BFS(String start, String end, LabeledDGraph<String, String> graph) {
         if (graph == null) {
             throw new IllegalArgumentException("Graph cannot be null");
         }
@@ -67,20 +67,29 @@ public class MarvelPaths {
         }
         if (graph.containsNode(start) && graph.containsNode(end)) {
             Queue<String> path = new LinkedList<>();
-            Map<String, ArrayList<LabeledDGraph.Edge>> visited = new HashMap<>();
+            Map<String, ArrayList<LabeledDGraph.Edge<String, String>>> visited = new HashMap<>();
             path.add(start);
             visited.put(start, new ArrayList<>());
             while (!path.isEmpty()) {
                 String next = path.remove();
                 if (next.equals(end)) {
-                    ArrayList<LabeledDGraph.Edge> res = new ArrayList<>(visited.get(next));
+                    ArrayList<LabeledDGraph.Edge<String, String>> res = new ArrayList<>(visited.get(next));
                     return res;
                 }
-                TreeSet<LabeledDGraph.Edge> children = new TreeSet<>(graph.getChildren(next));
-                for (LabeledDGraph.Edge child : children) {
+                TreeSet<LabeledDGraph.Edge<String, String>> children = new TreeSet<>((o1, o2) -> {
+                    if (!o1.getChild().equals(o2.getChild())) {
+                        return o1.getChild().compareTo(o2.getChild());
+                    }
+                    if (!o1.getLabel().equals(o2.getLabel())) {
+                        return o1.getLabel().compareTo(o2.getLabel());
+                    }
+                    return 0;
+                });
+                children.addAll(graph.getChildren(next));
+                for (LabeledDGraph.Edge<String, String> child : children) {
                     if (!visited.containsKey(child.getChild())) {
-                        ArrayList<LabeledDGraph.Edge> curPath = visited.get(next);
-                        ArrayList<LabeledDGraph.Edge> newPath = new ArrayList<>(curPath);
+                        ArrayList<LabeledDGraph.Edge<String, String>> curPath = visited.get(next);
+                        ArrayList<LabeledDGraph.Edge<String, String>> newPath = new ArrayList<>(curPath);
                         newPath.add(child);
                         visited.put(child.getChild(), newPath);
                         path.add(child.getChild());
@@ -97,7 +106,7 @@ public class MarvelPaths {
      * @param args the command-line arguments provided to the system
      */
     public static void main (String[] args) {
-        LabeledDGraph marvelGraph = pathsGraph("marvel.csv");
+        LabeledDGraph<String, String> marvelGraph = pathsGraph("marvel.csv");
         Scanner input = new Scanner(System.in);
         String res = "";
         System.out.println("Enter the names of the characters in all caps, with hyphens in between words");
@@ -105,7 +114,7 @@ public class MarvelPaths {
         String src = input.nextLine();
         System.out.println("Enter the name of the second character: ");
         String dest = input.nextLine();
-        ArrayList<LabeledDGraph.Edge> bfsList = BFS(src, dest, marvelGraph);
+        ArrayList<LabeledDGraph.Edge<String, String>> bfsList = BFS(src, dest, marvelGraph);
         if (!marvelGraph.containsNode(src) && !marvelGraph.containsNode(dest)) {
             res += "unknown: " + src;
             res += "\nunknown: " + dest;
@@ -116,7 +125,7 @@ public class MarvelPaths {
         } else {
             res = "path from " + src + " to " + dest + ":";
             if (bfsList != null) {
-                for (LabeledDGraph.Edge edge : bfsList) {
+                for (LabeledDGraph.Edge<String, String> edge : bfsList) {
                     res += "\n" + src + " to " + edge.getChild() + " via " + edge.getLabel();
                     src = edge.getChild();
                 }

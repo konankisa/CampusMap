@@ -6,16 +6,16 @@ import java.util.*;
 /**
  * LabeledDGraph represents a mutable directed graph with a finite number of nodes
  * and edges associated with the nodes. Each node can only appear once in the graph.
- * A node is a string value stored in the graph.
+ * A node is a value stored in the graph.
  * An edge stores a label and points from 1 node to another. Edges can point to the same node.
  *
  */
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
-public class LabeledDGraph {
+public class LabeledDGraph<T, E> {
     /**
      * Holds all the nodes and the edges
      */
-    private HashMap<String, HashSet<Edge>> graph;
+    private HashMap<T, HashSet<Edge<E, T>>> graph;
 
     /**
      * Toggles the expensive checkRep() computations
@@ -49,10 +49,10 @@ public class LabeledDGraph {
     private void checkRep() {
         assert (graph != null) : "graph == null";
         if (DEBUG) {
-            for (String node : getNodes()) {
+            for (T node : getNodes()) {
                 assert (node != null) : "Node == null";
                 assert (graph.get(node) != null) : "Edge set == null";
-                for (Edge edge : graph.get(node)) {
+                for (Edge<E, T> edge : graph.get(node)) {
                     assert (edge != null) : "Edge == null";
                 }
             }
@@ -68,7 +68,7 @@ public class LabeledDGraph {
      * @spec.requires node != null
      * @return true if node was not already in graph and was added
      */
-    public boolean addNode(String node) {
+    public boolean addNode(T node) {
         checkRep();
         if (node == null) {
             throw new IllegalArgumentException("Node cannot be null");
@@ -95,7 +95,7 @@ public class LabeledDGraph {
      * @spec.requires head != null, tail != null, label != null
      * @return true if edge was added between 2 nodes
      */
-    public boolean addEdge(String head, String edge, String tail) {
+    public boolean addEdge(T head, E edge, T tail) {
         checkRep();
         if (head == null || tail == null) {
             throw new IllegalArgumentException("A node cannot be null");
@@ -105,7 +105,7 @@ public class LabeledDGraph {
         }
         addNode(head);
         addNode(tail);
-        Edge toBeIns = new Edge(edge, tail);
+        Edge<E, T> toBeIns = new Edge<>(edge, tail);
         if (graph.get(head).contains(toBeIns)) {
             return false;
         }
@@ -119,10 +119,10 @@ public class LabeledDGraph {
      *
      * @return a list of all nodes in the graph
      */
-    public HashSet<String> getNodes() {
+    public HashSet<T> getNodes() {
         checkRep();
-        HashSet<String> res = new HashSet<>();
-        for (String node : graph.keySet()) {
+        HashSet<T> res = new HashSet<>();
+        for (T node : graph.keySet()) {
             res.add(node);
         }
         checkRep();
@@ -136,7 +136,7 @@ public class LabeledDGraph {
      * @spec.requires node != null
      * @return a list of all edge labels of the given node
      */
-    public HashSet<String> getEdges(String node) {
+    public HashSet<E> getEdges(T node) {
         checkRep();
         if (node == null) {
             throw new IllegalArgumentException("Node cannot be null");
@@ -144,8 +144,8 @@ public class LabeledDGraph {
         if (graph.isEmpty()) {
             return new HashSet<>();
         }
-        HashSet<String> finalRes = new HashSet<>();
-        for (Edge edge : graph.get(node)) {
+        HashSet<E> finalRes = new HashSet<>();
+        for (Edge<E, T> edge : graph.get(node)) {
             finalRes.add(edge.getLabel());
         }
         checkRep();
@@ -160,7 +160,7 @@ public class LabeledDGraph {
      * @return a list of all child nodes of the parent node
      * @throws NoSuchElementException if node is not in graph
      */
-    public HashSet<Edge> getChildren(String node) {
+    public HashSet<Edge<E, T>> getChildren(T node) {
         checkRep();
         if (node == null) {
             throw new IllegalArgumentException("Node cannot be null");
@@ -168,8 +168,8 @@ public class LabeledDGraph {
         if (!containsNode(node)) {
             throw new NoSuchElementException("Node is not in graph");
         }
-        Iterator<Edge> edgeIterator = graph.get(node).iterator();
-        HashSet<Edge> children = new HashSet<>();
+        Iterator<Edge<E, T>> edgeIterator = graph.get(node).iterator();
+        HashSet<Edge<E, T>> children = new HashSet<>();
         while (edgeIterator.hasNext()) {
             children.add(edgeIterator.next());
         }
@@ -184,7 +184,7 @@ public class LabeledDGraph {
      * @spec.requires node != null
      * @return true if the graph doesn't have the node
      */
-    public boolean containsNode(String node) {
+    public boolean containsNode(T node) {
         checkRep();
         if (node == null) {
             throw new IllegalArgumentException("Node cannot be null");
@@ -222,22 +222,22 @@ public class LabeledDGraph {
     }
 
     /**
-     * A public inner class that represents an edge that stores a string label and a string child node
+     * A public inner class that represents an edge that stores a label and a child node
      *
      * @spec.specfield label: String // The string representing an edge
      * @spec.specfield child: String // The node that the edge is pointing to
      */
-    public static class Edge implements Comparable<Edge> {
+    public static class Edge<E, T> {
 
         /**
          * A string representing the label of an edge
          */
-        private final String label;
+        private final E label;
 
         /**
          * A string representing the node that the edge is pointing to
          */
-        private final String child;
+        private final T child;
 
         // Representation Invariant:
         // label != null and child != null
@@ -263,7 +263,7 @@ public class LabeledDGraph {
          * @spec.requires label != null, node != null
          * @spec.effects Constructs an edge with a label, pointing to a node child
          */
-        public Edge(String label, String child) {
+        public Edge(E label, T child) {
             this.label = label;
             this.child = child;
             checkRep();
@@ -273,10 +273,12 @@ public class LabeledDGraph {
          * Returns the label of the edge
          *
          * @return The label of the edge
+         * MAKE SURE TO ASK ABOUT GENERICS AND VARIABLE ASSIGNMENT
          */
-        public String getLabel() {
+        public E getLabel() {
             checkRep();
-            return label;
+            E res = label;
+            return res;
         }
 
         /**
@@ -284,9 +286,10 @@ public class LabeledDGraph {
          *
          * @return The child node that the edge points to
          */
-        public String getChild() {
+        public T getChild() {
             checkRep();
-            return child;
+            T res = child;
+            return res;
         }
 
         /**
@@ -321,9 +324,9 @@ public class LabeledDGraph {
          *
          * @param o the object being compared
          * @return a negative, 0, or positive number if this is less than, equal to, or greater than given object
-         */
+
         @Override
-        public int compareTo(Edge o) {
+        public int compareTo(Edge<E, T> o) {
             if (!this.getChild().equals(o.getChild())) {
                 return this.getChild().compareTo(o.getChild());
             }
@@ -331,7 +334,7 @@ public class LabeledDGraph {
                 return this.getLabel().compareTo(o.getLabel());
             }
             return 0;
-        }
+        }*/
     }
 
     /*

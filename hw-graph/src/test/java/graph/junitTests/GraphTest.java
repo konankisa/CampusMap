@@ -14,7 +14,7 @@ public class GraphTest {
     @Rule
     public Timeout timeout = Timeout.seconds(10);
 
-    LabeledDGraph graph1 = new LabeledDGraph();
+    LabeledDGraph<String, String> graph1 = new LabeledDGraph<>();
 
     ///////////////////////////////////////////////////////////////////////////////////////
     ////  getChildren exception test

@@ -1,2 +1,5 @@
 Briefly list any changes you made to your graph class during hw-pathfinder, and why you made those changes.
-
+Alongside modifying my ADT and test drivers to accommodate for the generics being implemented, I decided to change
+my Edge class to not implement Comparable, and use Comparators wherever I needed to instead. I felt that it would
+be more convenient than having my Edge implement Comparable, because it allows for more flexibility when comparing
+objects.

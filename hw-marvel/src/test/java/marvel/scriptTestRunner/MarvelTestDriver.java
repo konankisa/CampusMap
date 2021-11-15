@@ -30,7 +30,7 @@ public class MarvelTestDriver {
     /**
      * String -> Graph: maps the names of graphs to the actual graph
      **/
-    private final Map<String, LabeledDGraph> graphs = new HashMap<String, LabeledDGraph>();
+    private final Map<String, LabeledDGraph<String, String>> graphs = new HashMap<String, LabeledDGraph<String, String>>();
     private final PrintWriter output;
     private final BufferedReader input;
 
@@ -116,7 +116,7 @@ public class MarvelTestDriver {
     }
 
     private void createGraph(String graphName) {
-        LabeledDGraph graph = new LabeledDGraph();
+        LabeledDGraph<String, String> graph = new LabeledDGraph<>();
 
         graphs.put(graphName, graph);
         output.println("created graph " + graphName);
@@ -134,7 +134,7 @@ public class MarvelTestDriver {
     }
 
     private void addNode(String graphName, String nodeName) {
-        LabeledDGraph graph = graphs.get(graphName);
+        LabeledDGraph<String, String> graph = graphs.get(graphName);
         graph.addNode(nodeName);
         output.println("added node " + nodeName + " to " + graphName);
     }
@@ -154,7 +154,7 @@ public class MarvelTestDriver {
 
     private void addEdge(String graphName, String parentName, String childName,
                          String edgeLabel) {
-        LabeledDGraph graph = graphs.get(graphName);
+        LabeledDGraph<String, String> graph = graphs.get(graphName);
         graph.addEdge(parentName, edgeLabel, childName);
         output.println("added edge " + edgeLabel + " from " +
                 parentName + " to " + childName + " in " + graphName);
@@ -170,7 +170,7 @@ public class MarvelTestDriver {
     }
 
     private void listNodes(String graphName) {
-        LabeledDGraph graph = graphs.get(graphName);
+        LabeledDGraph<String, String> graph = graphs.get(graphName);
         String res = graphName + " contains:";
         List<String> sortedList = new ArrayList<>(graph.getNodes());
         Collections.sort(sortedList);
@@ -191,11 +191,20 @@ public class MarvelTestDriver {
     }
 
     private void listChildren(String graphName, String parentName) {
-        LabeledDGraph graph = graphs.get(graphName);
-        HashSet<LabeledDGraph.Edge> children = graph.getChildren(parentName);
+        LabeledDGraph<String, String> graph = graphs.get(graphName);
+        HashSet<LabeledDGraph.Edge<String, String>> children = graph.getChildren(parentName);
         String res = "the children of " + parentName + " in " + graphName + " are:";
-        TreeSet<LabeledDGraph.Edge> sortedChildren = new TreeSet<>(children);
-        for (LabeledDGraph.Edge edge : sortedChildren) {
+        TreeSet<LabeledDGraph.Edge<String, String>> sortedChildren = new TreeSet<>((o1, o2) -> {
+            if (!o1.getChild().equals(o2.getChild())) {
+                return o1.getChild().compareTo(o2.getChild());
+            }
+            if (!o1.getLabel().equals(o2.getLabel())) {
+                return o1.getLabel().compareTo(o2.getLabel());
+            }
+            return 0;
+        });
+        sortedChildren.addAll(children);
+        for (LabeledDGraph.Edge<String, String> edge : sortedChildren) {
             res += " " + edge.getChild() + "(" + edge.getLabel() + ")";
         }
         output.println(res);
@@ -226,9 +235,9 @@ public class MarvelTestDriver {
     }
 
     private void findPath(String graphName, String src, String dest) {
-        LabeledDGraph graph = graphs.get(graphName);
+        LabeledDGraph<String, String> graph = graphs.get(graphName);
         String res = "";
-        ArrayList<LabeledDGraph.Edge> bfsList = BFS(src, dest, graph);
+        ArrayList<LabeledDGraph.Edge<String, String>> bfsList = BFS(src, dest, graph);
         if (!graph.containsNode(src) && !graph.containsNode(dest)) {
             res += "unknown: " + src;
             res += "\nunknown: " + dest;
@@ -239,7 +248,7 @@ public class MarvelTestDriver {
         } else {
             res = "path from " + src + " to " + dest + ":";
             if (bfsList != null) {
-                for (LabeledDGraph.Edge edge : bfsList) {
+                for (LabeledDGraph.Edge<String, String> edge : bfsList) {
                     res += "\n" + src + " to " + edge.getChild() + " via " + edge.getLabel();
                     src = edge.getChild();
                 }
