@@ -27,8 +27,8 @@ import static pathfinder.parser.CampusPathsParser.parseCampusBuildings;
 /**
  * This class implements the ModelAPI interface in order to represent a map of a campus.
  *
- * @spec.specfield paths: LabeledDGraph<Point, Double> // stores the paths between all points in the campus
- * @spec.specfield buildings: HashMap<String, CampusBuilding> // stores all the buildings in the campus
+ * @spec.specfield paths: {@code LabeledDGraph<Point, Double>} // stores the paths between all points in the campus
+ * @spec.specfield buildings: {@code HashMap<String, CampusBuilding>} // stores all the buildings in the campus
  */
 @SuppressWarnings("ALL")
 public class CampusMap implements ModelAPI {
