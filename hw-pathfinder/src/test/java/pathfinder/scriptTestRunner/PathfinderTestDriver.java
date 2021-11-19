@@ -218,7 +218,7 @@ public class PathfinderTestDriver {
     private void findPath(String graphName, String src, String dest) {
         LabeledDGraph<String, Double> graph = graphs.get(graphName);
         String res = "";
-        Path<String> dijkstraList = dijsktra(src, dest, graph);
+        Path<String> dijkstraList = dijkstra(src, dest, graph);
         if (!graph.containsNode(src) && !graph.containsNode(dest)) {
             res += "unknown: " + src;
             res += "\nunknown: " + dest;
@@ -232,8 +232,8 @@ public class PathfinderTestDriver {
                 double totalCost = 0.000;
                 for (Path<String>.Segment edge : dijkstraList) {
                     if (!src.equals(edge.getEnd())) {
-                        double cost = edge.getCost();
-                        res += "\n" + src + " to " + edge.getEnd() + " with weight " + String.format("%.3f", cost);
+                        res += "\n" + src + " to " + edge.getEnd() + " with weight " +
+                                String.format("%.3f", edge.getCost());
                         totalCost += edge.getCost();
                         src = edge.getEnd();
                     }

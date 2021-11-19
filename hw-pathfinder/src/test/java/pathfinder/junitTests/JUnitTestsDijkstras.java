@@ -5,7 +5,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
 
-import static pathfinder.DijkstraAlg.dijsktra;
+import static pathfinder.DijkstraAlg.dijkstra;
 
 public class JUnitTestsDijkstras {
     @Rule
@@ -19,9 +19,9 @@ public class JUnitTestsDijkstras {
 
     @Test(expected = IllegalArgumentException.class)
     public void testHasException() {
-        dijsktra(null, "no", test);
-        dijsktra("yes", null, test);
-        dijsktra("yes", "no", null);
+        dijkstra(null, "no", test);
+        dijkstra("yes", null, test);
+        dijkstra("yes", "no", null);
     }
 
 }

@@ -9,7 +9,8 @@ import java.util.TreeSet;
 
 /**
  * This class is used to find the shortest path in terms of edge weight between 2 points using Dijkstra's algorithm.
- * The class contains 1 method, which is the algorithm itself, used to find the shortest path
+ * The class contains 1 method, which is the algorithm itself, used to find the shortest path. The behavior of the
+ * algorithm is undefined in the case of 2 shortest paths with the same number of hops and the same weights.
  */
 public class DijkstraAlg {
     // This class does not have an abstraction function or a rep invariant because it is not an ADT, where we
@@ -26,7 +27,7 @@ public class DijkstraAlg {
      * @spec.requires graph != null, start != null, end != null
      * @return the shortest path in terms of edge weight between the 2 given points
      */
-    public static <T> Path<T> dijsktra (T start, T end, LabeledDGraph<T, Double> graph) {
+    public static <T> Path<T> dijkstra (T start, T end, LabeledDGraph<T, Double> graph) {
         if (graph == null) {
             throw new IllegalArgumentException("Graph cannot be null");
         }

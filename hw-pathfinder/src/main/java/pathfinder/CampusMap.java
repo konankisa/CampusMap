@@ -35,12 +35,13 @@ public class CampusMap implements ModelAPI {
 
     // Representation Invariant:
     // paths != null. buildings != null. Point values != null.
-    // Buildings and their short names cannot be null
+    // Buildings and their abbreviated names cannot be null
 
     // Abstraction Function:
-    // A CampusMap c represents a map that contains buildings and the paths connecting said buildings
-    // This is such that all the paths in c are represented by the directed graph "paths",
-    // and all the buildings in c are represented by the map buildings.
+    // AF(this):
+    //      A CampusMap c represents a map that contains buildings and the paths connecting said buildings.
+    //      This is such that all the paths in c are represented by the directed graph this.paths,
+    //      and all the buildings and their abbreviated names in c are represented by the map this.buildings.
 
     /**
      * Stores the paths between all given points in the campus
@@ -157,7 +158,7 @@ public class CampusMap implements ModelAPI {
                 endPoint = new Point(buildings.get(shortName).getX(), buildings.get(shortName).getY());
             }
         }
-        Path<Point> finalPath = DijkstraAlg.dijsktra(startPoint, endPoint, paths);
+        Path<Point> finalPath = DijkstraAlg.dijkstra(startPoint, endPoint, paths);
         checkRep();
         return finalPath;
     }
