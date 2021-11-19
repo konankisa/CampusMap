@@ -20,7 +20,7 @@ public class MarvelPaths {
     // it, then call its methods on that instance.
 
     /**
-     * Creates a LabeledDGraph of characters and the books they appear in as nodes and edges respectively
+     * Creates a LabeledDGraph of characters and the books they appear in as edges and nodes respectively
      *
      * @param filename the name of the file with the data of characters and books
      * @spec.requires filename != null

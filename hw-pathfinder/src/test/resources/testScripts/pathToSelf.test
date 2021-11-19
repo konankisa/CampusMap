@@ -1,0 +1,11 @@
+# Using Dijkstra's algorithm to check the
+# path from a node to itself
+
+# Creates a graph
+CreateGraph graph
+
+# Adds a node to the graph
+AddNode graph node1
+
+# Finds a path from the node to itself
+FindPath graph node1 node1

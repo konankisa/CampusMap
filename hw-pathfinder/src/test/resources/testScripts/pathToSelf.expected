@@ -1,0 +1,12 @@
+# Using Dijkstra's algorithm to check the
+# path from a node to itself
+
+# Creates a graph
+created graph graph
+
+# Adds a node to the graph
+added node node1 to graph
+
+# Finds a path from the node to itself
+path from node1 to node1:
+total cost: 0.000

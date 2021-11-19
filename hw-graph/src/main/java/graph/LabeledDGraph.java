@@ -8,14 +8,17 @@ import java.util.*;
  * and edges associated with the nodes. Each node can only appear once in the graph.
  * A node is a value stored in the graph.
  * An edge stores a label and points from 1 node to another. Edges can point to the same node.
- *
+ * This class is generic over the type of data that labels the node and its edges.
+ * @param <T> represents a node type
+ * @param <E> represents an edge type
  */
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class LabeledDGraph<T, E> {
+
     /**
      * Holds all the nodes and the edges
      */
-    private HashMap<T, HashSet<Edge<E, T>>> graph;
+    private HashMap<T, HashSet<Edge<T, E>>> graph;
 
     /**
      * Toggles the expensive checkRep() computations
@@ -52,7 +55,7 @@ public class LabeledDGraph<T, E> {
             for (T node : getNodes()) {
                 assert (node != null) : "Node == null";
                 assert (graph.get(node) != null) : "Edge set == null";
-                for (Edge<E, T> edge : graph.get(node)) {
+                for (Edge<T, E> edge : graph.get(node)) {
                     assert (edge != null) : "Edge == null";
                 }
             }
@@ -105,7 +108,7 @@ public class LabeledDGraph<T, E> {
         }
         addNode(head);
         addNode(tail);
-        Edge<E, T> toBeIns = new Edge<>(edge, tail);
+        Edge<T, E> toBeIns = new Edge<>(edge, tail);
         if (graph.get(head).contains(toBeIns)) {
             return false;
         }
@@ -145,7 +148,7 @@ public class LabeledDGraph<T, E> {
             return new HashSet<>();
         }
         HashSet<E> finalRes = new HashSet<>();
-        for (Edge<E, T> edge : graph.get(node)) {
+        for (Edge<T, E> edge : graph.get(node)) {
             finalRes.add(edge.getLabel());
         }
         checkRep();
@@ -160,7 +163,7 @@ public class LabeledDGraph<T, E> {
      * @return a list of all child nodes of the parent node
      * @throws NoSuchElementException if node is not in graph
      */
-    public HashSet<Edge<E, T>> getChildren(T node) {
+    public HashSet<Edge<T, E>> getChildren(T node) {
         checkRep();
         if (node == null) {
             throw new IllegalArgumentException("Node cannot be null");
@@ -168,8 +171,8 @@ public class LabeledDGraph<T, E> {
         if (!containsNode(node)) {
             throw new NoSuchElementException("Node is not in graph");
         }
-        Iterator<Edge<E, T>> edgeIterator = graph.get(node).iterator();
-        HashSet<Edge<E, T>> children = new HashSet<>();
+        Iterator<Edge<T, E>> edgeIterator = graph.get(node).iterator();
+        HashSet<Edge<T, E>> children = new HashSet<>();
         while (edgeIterator.hasNext()) {
             children.add(edgeIterator.next());
         }
@@ -223,19 +226,20 @@ public class LabeledDGraph<T, E> {
 
     /**
      * A public inner class that represents an edge that stores a label and a child node
+     * This class is generic over the type of data that labels the edge label and the child node it is attached to
      *
-     * @spec.specfield label: String // The string representing an edge
-     * @spec.specfield child: String // The node that the edge is pointing to
+     * @spec.specfield label: E // The data representing an edge
+     * @spec.specfield child: T // The node that the edge is pointing to
      */
-    public static class Edge<E, T> {
+    public static class Edge<T, E> {
 
         /**
-         * A string representing the label of an edge
+         * Data representing the label of an edge
          */
         private final E label;
 
         /**
-         * A string representing the node that the edge is pointing to
+         * Data representing the node that the edge is pointing to
          */
         private final T child;
 
@@ -273,7 +277,6 @@ public class LabeledDGraph<T, E> {
          * Returns the label of the edge
          *
          * @return The label of the edge
-         * MAKE SURE TO ASK ABOUT GENERICS AND VARIABLE ASSIGNMENT
          */
         public E getLabel() {
             checkRep();
@@ -311,10 +314,10 @@ public class LabeledDGraph<T, E> {
          */
         @Override
         public boolean equals (Object o) {
-            if (!(o instanceof Edge)) {
+            if (!(o instanceof Edge<?, ?>)) {
                 return false;
             }
-            Edge res = (Edge) o;
+            Edge<?, ?> res = (Edge<?, ?>) o;
             return res.getLabel().equals(this.getLabel())
                     && res.getChild().equals(this.getChild());
         }

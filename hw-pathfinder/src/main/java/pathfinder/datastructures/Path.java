@@ -19,6 +19,9 @@ import java.util.List;
  * This represents an immutable path between two cartesian coordinate points, particularly
  * Path#getStart() and Path#getEnd(). Also contains a cached
  * version of the total cost along this path, for efficient repeated access.
+ * This class is generic over the type of data that it represents as connecting points
+ *
+ * @param <T> represents the data type of the points in the path
  */
 //@SuppressWarnings("ALL")
 public class Path<T> implements Iterable<Path<T>.Segment> {
@@ -174,10 +177,10 @@ public class Path<T> implements Iterable<Path<T>.Segment> {
         if(this == obj) {
             return true;
         }
-        if(!(obj instanceof Path)) {
+        if(!(obj instanceof Path<?>)) {
             return false;
         }
-        Path<T> other = (Path<T>) obj;
+        Path<?> other = (Path<?>) obj;
         if(this.path.size() != other.path.size()) {
             return false;
         }
@@ -214,6 +217,7 @@ public class Path<T> implements Iterable<Path<T>.Segment> {
      * Segment represents a single segment as part of a longer, more complex path between points.
      * Segments are immutable parts of a larger path that cannot be instantiated directly, and
      * are created as part of larger paths by calling Path#extend(Point, double).
+     * This class utilizes the generic type parameter of its parent class to represent connecting points
      */
     public class Segment {
 
@@ -304,10 +308,10 @@ public class Path<T> implements Iterable<Path<T>.Segment> {
             if(this == obj) {
                 return true;
             }
-            if(!(obj instanceof Path.Segment)) {
+            if(!(obj instanceof Path<?>.Segment)) {
                 return false;
             }
-            Segment other = (Segment) obj;
+            Path<?>.Segment other = (Path<?>.Segment) obj;
             return other.getStart().equals(this.getStart())
                    && other.getEnd().equals(this.getEnd())
                    && (Double.compare(this.cost, other.cost) == 0);

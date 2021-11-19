@@ -13,4 +13,6 @@ AddEdge simpleGraph A C 1.0
 AddEdge simpleGraph C D 1.0
 AddEdge simpleGraph D B 1.0
 
+ListChildren simpleGraph A
+
 FindPath simpleGraph A B
