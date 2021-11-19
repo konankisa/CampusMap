@@ -233,7 +233,7 @@ public class PathfinderTestDriver {
                 for (Path<String>.Segment edge : dijkstraList) {
                     if (!src.equals(edge.getEnd())) {
                         double cost = edge.getCost();
-                        res += "\n" + src + " to " + edge.getEnd() + " with weight " + cost;
+                        res += "\n" + src + " to " + edge.getEnd() + " with weight " + String.format("%.3f", cost);
                         totalCost += edge.getCost();
                         src = edge.getEnd();
                     }
