@@ -27,8 +27,11 @@ class GridSizePicker extends Component<GridSizePickerProps> {
         // box updates, it'll tell you the new contents of the text box, like we're using
         // below.
         //
-        // TODO - Not currently doing any validation or error handling. Should probably add some...
-        const newSize: number = parseInt(event.target.value);
+        let newSize: number = parseInt(event.target.value);
+        if (newSize < 0 || newSize > 100) {
+            alert("Please enter a value between 0 and 100 (both inclusive)");
+            newSize = Math.floor(newSize/10);
+        }
         this.props.onChange(newSize); // Tell our parent component about the new size.
     };
 

@@ -37,12 +37,16 @@ class App extends Component<{}, AppState> { // <- {} means no props.
     };
 
     render() {
+        let val = 0;
         const canvas_size = 500;
+        if (this.state.gridSize.toString() != "NaN") {
+            val = this.state.gridSize;
+        }
         return (
             <div>
                 <p id="app-title">Connect the Dots!</p>
                 <GridSizePicker value={this.state.gridSize.toString()} onChange={this.updateGridSize}/>
-                <Grid size={this.state.gridSize} width={canvas_size} height={canvas_size}/>
+                <Grid size={val} width={canvas_size} height={canvas_size}/>
                 <EdgeList onChange={(value) => {console.log("EdgeList onChange", value)}}/>
             </div>
 
