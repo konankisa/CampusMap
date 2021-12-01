@@ -19,6 +19,7 @@ import "./App.css";
 
 interface AppState {
     gridSize: number;  // size of the grid to display
+    edges: string;     // string of edges to draw
 }
 
 class App extends Component<{}, AppState> { // <- {} means no props.
@@ -27,6 +28,7 @@ class App extends Component<{}, AppState> { // <- {} means no props.
         super(props);
         this.state = {
             gridSize: 4,
+            edges: "",
         };
     }
 
@@ -36,8 +38,22 @@ class App extends Component<{}, AppState> { // <- {} means no props.
         });
     };
 
+    // Function to send an empty string or a string of edges
+    // based on the button being clicked
+    edgeInput = (cur: string, clear: boolean) => {
+        if (clear) {
+            this.setState({
+                edges: "",
+            })
+        } else {
+            this.setState({
+                edges: cur,
+            })
+        }
+    }
+
     render() {
-        let val = 0;
+        let val: number = 0;
         let str_displayed = this.state.gridSize.toString();
         const canvas_size = 500;
         if (str_displayed != "NaN") {
@@ -47,10 +63,9 @@ class App extends Component<{}, AppState> { // <- {} means no props.
             <div>
                 <p id="app-title">Connect the Dots!</p>
                 <GridSizePicker value={str_displayed} onChange={this.updateGridSize}/>
-                <Grid size={val} width={canvas_size} height={canvas_size}/>
-                <EdgeList onChange={(value) => {console.log("EdgeList onChange", value)}}/>
+                <Grid size={val} width={canvas_size} height={canvas_size} edges={this.state.edges}/>
+                <EdgeList onChange={this.edgeInput}/>
             </div>
-
         );
     }
 

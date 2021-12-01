@@ -10,11 +10,14 @@
  */
 
 import React, {Component} from 'react';
+import {Edge} from "./Edge";
+import {isString} from "util";
 
 interface GridProps {
     size: number;    // size of the grid to display
     width: number;   // width of the canvas on which to draw
     height: number;  // height of the canvas on which to draw
+    edges: string;   // edges that need to be drawn
 }
 
 interface GridState {
@@ -86,6 +89,71 @@ class Grid extends Component<GridProps, GridState> {
         for (let coordinate of coordinates) {
             this.drawCircle(ctx, coordinate);
         }
+
+        // Parse the input string of edges
+        let str_arr: string[] = this.props.edges.split(/\n/);
+        let edge_arr: Edge[] = [];
+        let counter: number = 0;
+        let in_grid: boolean = true;
+        let coord_arr: number[] = [];
+        let extra_space: boolean = false;
+        for (let str of str_arr) {
+            counter++;
+            if (str === "") {
+                continue;
+            }
+            // Throws an alert if there is an extra space in the given input anywhere
+            let val: string[] = str.split(" ");
+            for (let str of val) {
+                if (str === "") {
+                    alert("Please enter data in the format x1,y1 x2,y2 color\nLine " + counter +
+                    " has an extra space or another portion of the line");
+                    extra_space = true;
+                    break;
+                }
+            }
+            // Doesn't draw if there is an extra space
+            if (extra_space) {
+                in_grid = false;
+                break;
+            }
+            let s1: string[] = val[0].split(",");
+            let s2: string[] = val[1].split(",");
+            let n1: number[] = [];
+            let n2: number[] = [];
+            n1.push(parseInt(s1[0]), parseInt(s1[1]));
+            n2.push(parseInt(s2[0]), parseInt(s2[1]));
+            coord_arr.push(n1[0], n1[1], n2[0], n2[1]);
+            // Throws an alert if the number formatting is not right
+            if (isNaN(n1[0]) || isNaN(n1[1]) || isNaN(n2[0])
+                    || isNaN(n2[1])) {
+                alert("Please enter data in the format x1,y1 x2,y2 color\nLine " + counter +
+                    " is missing a space or another portion of the line");
+            }
+            let cur = new Edge(n1, n2, val[2]);
+            edge_arr.push(cur);
+        }
+        // Throws an alert if the grid size is too small for the given inputs to be drawn
+        for (let coord in coord_arr) {
+            if (parseInt(coord) >= this.props.size) {
+                in_grid = false;
+                alert("Cannot draw edges, grid must be at least size " + (Math.max(...coord_arr) + 1));
+                break;
+            }
+        }
+
+        // Draw the edges between points
+        let scale = 500 / (this.props.size + 1);
+        if (in_grid) {
+            for (let edge of edge_arr) {
+                ctx.beginPath()
+                ctx.lineWidth = Math.min(5, 200 / (this.props.size));
+                ctx.strokeStyle = edge.color;
+                ctx.moveTo((edge.p1[0] + 1) * scale, (edge.p1[1] + 1) * scale);
+                ctx.lineTo((edge.p2[0] + 1) * scale, (edge.p2[1] + 1) * scale);
+                ctx.stroke();
+            }
+        }
     };
 
     /**
@@ -93,10 +161,9 @@ class Grid extends Component<GridProps, GridState> {
      * be drawn.
      */
     getCoordinates = (): [number, number][] => {
-        // A hardcoded 4x4 grid. Probably not going to work when we change the grid size...
+        // An x by x grid that scales based on the size given
         let vals: [number, number][];
         vals = [];
-
         for (let i = 0; i < this.props.size; i++) {
             for (let j = 0; j < this.props.size; j++) {
                 vals.push([(i+1) * (500 / (this.props.size + 1)), (j+1) * 500 / (this.props.size + 1)]);
