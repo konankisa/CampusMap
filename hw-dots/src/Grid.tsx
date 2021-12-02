@@ -134,12 +134,9 @@ class Grid extends Component<GridProps, GridState> {
             edge_arr.push(cur);
         }
         // Throws an alert if the grid size is too small for the given inputs to be drawn
-        for (let coord in coord_arr) {
-            if (parseInt(coord) >= this.props.size) {
-                in_grid = false;
-                alert("Cannot draw edges, grid must be at least size " + (Math.max(...coord_arr) + 1));
-                break;
-            }
+        if (Math.max(...coord_arr) >= this.props.size) {
+            alert("Cannot draw edges, grid must be at least size " + (Math.max(...coord_arr) + 1));
+            return;
         }
 
         // Draw the edges between points
