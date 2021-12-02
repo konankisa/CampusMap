@@ -102,21 +102,8 @@ class Grid extends Component<GridProps, GridState> {
             if (str === "") {
                 continue;
             }
-            // Throws an alert if there is an extra space in the given input anywhere
             let val: string[] = str.split(" ");
-            for (let str of val) {
-                if (str === "") {
-                    alert("Please enter data in the format x1,y1 x2,y2 color\nLine " + counter +
-                    " has an extra space or another portion of the line");
-                    extra_space = true;
-                    break;
-                }
-            }
-            // Doesn't draw if there is an extra space
-            if (extra_space) {
-                in_grid = false;
-                break;
-            }
+
             let s1: string[] = val[0].split(",");
             let s2: string[] = val[1].split(",");
             let n1: number[] = [];
@@ -129,6 +116,21 @@ class Grid extends Component<GridProps, GridState> {
                     || isNaN(n2[1])) {
                 alert("Please enter data in the format x1,y1 x2,y2 color\nLine " + counter +
                     " is missing a space or another portion of the line");
+                break;
+            }
+            // Throws an alert if there is an extra space in the given input anywhere
+            for (let str of val) {
+                if (str === "") {
+                    alert("Please enter data in the format x1,y1 x2,y2 color\nLine " + counter +
+                        " has an extra space or another portion of the line");
+                    extra_space = true;
+                    break;
+                }
+            }
+            // Doesn't draw if there is an extra space
+            if (extra_space) {
+                in_grid = false;
+                break;
             }
             let cur = new Edge(n1, n2, val[2]);
             edge_arr.push(cur);
