@@ -1,0 +1,48 @@
+/* Creates some space between the textboxes so they aren't scrunched up */
+select {
+    margin: 5px;
+}
+
+canvas {
+    margin: 5px auto
+}
+
+#buttons button {
+    margin: 5px;
+}
+
+#buttons {
+    text-align: center;
+}
+
+#inputs {
+    text-align: center;
+}
+
+#src {
+    position: static;
+    left: -100px;
+}
+
+#dest {
+    position: relative;
+    left: -20px;
+}
+
+#Start {
+    position: static;
+    left: -100px;
+}
+
+#End {
+    position: relative;
+    left: -20px;
+}
+
+#map-view {
+    margin: 5px 0;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    color: brown;
+}

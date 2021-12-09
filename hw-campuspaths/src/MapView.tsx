@@ -12,11 +12,17 @@
 import React, {Component} from 'react';
 import "./MapView.css";
 
+interface MapViewProps {
+    path: [number, number][]
+    start: [number, number]
+    end: [number, number]
+}
+
 interface MapViewState {
     backgroundImage: HTMLImageElement | null;
 }
 
-class MapView extends Component<{}, MapViewState> {
+class MapView extends Component<MapViewProps, MapViewState> {
 
     // NOTE:
     // This component is a suggestion for you to use, if you would like to.
@@ -27,7 +33,7 @@ class MapView extends Component<{}, MapViewState> {
 
     canvas: React.RefObject<HTMLCanvasElement>;
 
-    constructor(props: {}) {
+    constructor(props: MapViewProps) {
         super(props);
         this.state = {
             backgroundImage: null
@@ -37,10 +43,13 @@ class MapView extends Component<{}, MapViewState> {
 
     componentDidMount() {
         // Might want to do something here?
+        this.fetchAndSaveImage();
+        this.drawBackgroundImage();
     }
 
     componentDidUpdate() {
         // Might want something here too...
+        this.drawBackgroundImage();
     }
 
     fetchAndSaveImage() {
@@ -70,7 +79,40 @@ class MapView extends Component<{}, MapViewState> {
             canvas.height = this.state.backgroundImage.height;
             ctx.drawImage(this.state.backgroundImage, 0, 0);
         }
+        const buildings = this.markBuildings();
+        let path = this.props.path
+        for (let i = 0; i < path.length - 1; i++) {
+            ctx.beginPath();
+            ctx.lineWidth = 15;
+            ctx.strokeStyle = "blue";
+            ctx.moveTo(path[i][0], path[i][1]);
+            ctx.lineTo(path[i + 1][0], path[i + 1][1]);
+            ctx.stroke();
+        }
+        for (let building of buildings) {
+            this.buildingHighlight(ctx, building);
+        }
     }
+
+    markBuildings = (): [number, number][] => {
+        let startEnd: [number, number][] = [];
+        if (this.props.path.length > 1) {
+            startEnd.push(this.props.path[0]);
+            startEnd.push(this.props.path[this.props.path.length - 1]);
+        }
+        return startEnd;
+    }
+
+    buildingHighlight = (ctx: CanvasRenderingContext2D, coordinate: [number, number]) => {
+        ctx.fillStyle = "red";
+        // Generally use a radius of 4, but when there are lots of dots on the grid (> 50)
+        // we slowly scale the radius down so they'll all fit next to each other.
+        const radius = 25;
+        ctx.beginPath();
+        ctx.arc(coordinate[0], coordinate[1], radius, 0, 2 * Math.PI);
+        //console.log(coordinate[0] + ", " + coordinate[1])
+        ctx.fill();
+    };
 
     render() {
         return (

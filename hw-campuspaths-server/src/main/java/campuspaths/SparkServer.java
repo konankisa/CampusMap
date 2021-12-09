@@ -12,6 +12,16 @@
 package campuspaths;
 
 import campuspaths.utils.CORSFilter;
+import com.google.gson.Gson;
+import pathfinder.CampusMap;
+import pathfinder.datastructures.Path;
+import pathfinder.datastructures.Point;
+import spark.Spark;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class SparkServer {
 
@@ -24,6 +34,31 @@ public class SparkServer {
         // You should leave these two lines at the very beginning of main().
 
         // TODO: Create all the Spark Java routes you need here.
-    }
 
+        // A field for the CampusMap object
+        CampusMap map = new CampusMap();
+
+        // Returns a list of the buildings in shortname: longname form in JSON
+        Spark.get("/buildings", (request, response) -> {
+            Gson gson = new Gson();
+            Map<String, String> buildings = new HashMap<>(map.buildingNames());
+            ArrayList<String[]> buildingsArr = new ArrayList<>();
+            for (String building : buildings.keySet()) {
+                buildingsArr.add(new String[]{building, buildings.get(building)});
+            }
+            return gson.toJson(buildingsArr);
+        });
+
+        // Returns a path between 2 buildings in JSON
+        Spark.get("/find-path", (request, response) -> {
+            Gson gson = new Gson();
+            String start = request.queryParams("start");
+            String end = request.queryParams("end");
+            if (Objects.equals(start, "") || Objects.equals(end, "")) {
+                Spark.halt(400, "Must have start and end names");
+            }
+            Path<Point> path = map.findShortestPath(start, end);
+            return gson.toJson(path);
+        });
+    }
 }
