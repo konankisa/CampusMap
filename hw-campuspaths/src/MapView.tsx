@@ -42,13 +42,11 @@ class MapView extends Component<MapViewProps, MapViewState> {
     }
 
     componentDidMount() {
-        // Might want to do something here?
         this.fetchAndSaveImage();
         this.drawBackgroundImage();
     }
 
     componentDidUpdate() {
-        // Might want something here too...
         this.drawBackgroundImage();
     }
 
@@ -81,6 +79,7 @@ class MapView extends Component<MapViewProps, MapViewState> {
         }
         const buildings = this.markBuildings();
         let path = this.props.path
+        // Marks the path according to the given coords
         for (let i = 0; i < path.length - 1; i++) {
             ctx.beginPath();
             ctx.lineWidth = 15;
@@ -94,6 +93,7 @@ class MapView extends Component<MapViewProps, MapViewState> {
         }
     }
 
+    // Returns the buildings chosen by the user
     markBuildings = (): [number, number][] => {
         let startEnd: [number, number][] = [];
         if (this.props.path.length > 1) {
@@ -103,14 +103,12 @@ class MapView extends Component<MapViewProps, MapViewState> {
         return startEnd;
     }
 
+    // Highlights the buildings chosen by the user on the campus map
     buildingHighlight = (ctx: CanvasRenderingContext2D, coordinate: [number, number]) => {
         ctx.fillStyle = "red";
-        // Generally use a radius of 4, but when there are lots of dots on the grid (> 50)
-        // we slowly scale the radius down so they'll all fit next to each other.
         const radius = 25;
         ctx.beginPath();
         ctx.arc(coordinate[0], coordinate[1], radius, 0, 2 * Math.PI);
-        //console.log(coordinate[0] + ", " + coordinate[1])
         ctx.fill();
     };
 

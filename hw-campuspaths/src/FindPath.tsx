@@ -30,7 +30,7 @@ class FindPath extends Component<FindPathProps, FindPathState> {
                 "&end=" + `${this.props.dest}`;
             let response = await fetch(url);
             if (!response.ok) {
-                alert("The status is wrong! Expected: 200, Was: " + response.status);
+                alert("The status is wrong! Please choose valid buildings");
                 return;
             }
             let parsed = await response.json();

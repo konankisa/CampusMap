@@ -33,6 +33,7 @@ class BuildingPickers extends Component<BuildingProps, BuildingState> {
         this.getBuildings().then(() => console.log());
     }
 
+    // Gets the list of buildings
     getBuildings = async () => {
         try {
             let response = await fetch("http://localhost:4567/buildings")
